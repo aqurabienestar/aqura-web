@@ -39,3 +39,42 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* Qartella no trae tildes, ñ ni ¿ en ningún peso. Esas letras salen de Montserrat,
+   con el mismo peso y ajustadas a la altura de Qartella (93 %). */
+
+@font-face {
+  font-family: 'Qartella Acentos';
+  src: url('@fontsource/montserrat/files/montserrat-latin-300-normal.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 93%;
+}
+
+@font-face {
+  font-family: 'Qartella Acentos';
+  src: url('@fontsource/montserrat/files/montserrat-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 93%;
+}
+
+@font-face {
+  font-family: 'Qartella Acentos';
+  src: url('@fontsource/montserrat/files/montserrat-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 93%;
+}
+
+@font-face {
+  font-family: 'Qartella Acentos';
+  src: url('@fontsource/montserrat/files/montserrat-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 93%;
+}

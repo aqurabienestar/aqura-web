@@ -1,0 +1,16 @@
+---
+// Cloudflare Pages la muestra en cualquier dirección que no exista.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { textos } from '../i18n';
+
+const es = textos('es').noEncontrada;
+const en = textos('en').noEncontrada;
+---
+<BaseLayout titulo={es.titulo} noIndexar sinAlterno>
+  <section class="contenedor seccion">
+    <h1>{es.titulo}</h1>
+    <p class="entrada lectura">{es.texto}</p>
+    <p><a class="btn btn--primario" href="/">{es.inicio}</a></p>
+    <p lang="en" class="lectura">{en.titulo}. <a href="/en/">{en.inicio}</a></p>
+  </section>
+</BaseLayout>

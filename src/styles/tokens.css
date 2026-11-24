@@ -33,7 +33,7 @@
 
   /* Tipografía */
   --font-titulos: 'Montserrat', system-ui, sans-serif;
-  --font-cuerpo:  'Qartella', 'Montserrat', system-ui, sans-serif;
+  --font-cuerpo:  'Qartella', 'Qartella Acentos', 'Montserrat', system-ui, sans-serif;
   --font-acento:  'Mairo', Georgia, serif;
 
   /* Escala tipográfica fluida (375 px → 1280 px) */

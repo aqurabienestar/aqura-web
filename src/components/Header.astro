@@ -12,9 +12,10 @@ import {
 
 interface Props {
   whatsappMensaje: string;
+  sinAlterno?: boolean;
 }
 
-const { whatsappMensaje } = Astro.props;
+const { whatsappMensaje, sinAlterno = false } = Astro.props;
 const idioma = idiomaDesdeUrl(Astro.url);
 const t = textos(idioma);
 const actual = rutaBase(Astro.url.pathname).replace(/\/$/, '') || '/';
@@ -89,7 +90,7 @@ const whatsapp = enlaceWhatsapp(whatsappMensaje);
     </div>
 
     <div class="header__acciones">
-      <SelectorIdioma />
+      <SelectorIdioma sinAlterno={sinAlterno} />
       <a class="btn btn--primario header__whatsapp" href={whatsapp} target="_blank" rel="noopener">
         <IconoWhatsapp />
         {t.ui.whatsapp}

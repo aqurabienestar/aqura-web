@@ -1,9 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { URL_SITIO } from './src/sitio.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-  // Cambiar por el dominio definitivo cuando exista.
-  site: 'https://aqura.pages.dev',
+  site: URL_SITIO, // se cambia en src/sitio.mjs
   trailingSlash: 'ignore',
 });

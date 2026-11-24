@@ -33,6 +33,11 @@ const en: Diccionario = {
   whatsapp: {
     mensajePorDefecto: 'Hi Sergio, I would like some information about AQURA.',
   },
+  noEncontrada: {
+    titulo: 'This page does not exist',
+    texto: 'The link may have changed, or the page may not be ready yet.',
+    inicio: 'Go to home',
+  },
   footer: {
     lema: 'Freediving, aquatic therapy and wellbeing.',
     ubicacion: 'Pereira, Colombia',

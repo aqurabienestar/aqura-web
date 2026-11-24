@@ -31,6 +31,11 @@ const es = {
   whatsapp: {
     mensajePorDefecto: 'Hola Sergio, quiero información sobre AQURA.',
   },
+  noEncontrada: {
+    titulo: 'Esta página no existe',
+    texto: 'Puede que el enlace haya cambiado o que la página aún no esté lista.',
+    inicio: 'Ir al inicio',
+  },
   footer: {
     lema: 'Apnea, terapia acuática y bienestar.',
     ubicacion: 'Pereira, Colombia',
