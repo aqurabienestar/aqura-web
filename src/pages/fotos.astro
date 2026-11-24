@@ -1,0 +1,95 @@
+---
+// Página interna: lista de todas las fotos que pide el sitio. No se indexa ni aparece en el menú.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { etiquetaFormato, fotos, type Formato } from '../contenido/fotos';
+
+const lista = Object.entries(fotos).map(([archivo, f]) => ({ archivo, ...f }));
+const paginas = [...new Set(lista.map((f) => f.pagina))];
+const conteo = (formato: Formato) => lista.filter((f) => f.formato === formato).length;
+---
+<BaseLayout titulo="Fotos" noIndexar sinAlterno>
+  <section class="contenedor seccion fotos__intro">
+    <span class="antetitulo">Uso interno</span>
+    <h1>Fotos que necesita el sitio</h1>
+    <p class="entrada lectura">
+      {lista.length} fotos en total: {conteo('horizontal')} horizontales, {conteo('vertical')} verticales y {conteo('cuadrada')} cuadradas.
+    </p>
+    <p class="lectura">
+      Guarda cada foto en <code>public/img/</code> con el nombre exacto de la columna "Archivo" (por ejemplo <code>AQURA_CURSOS_aida2_01.jpg</code>).
+      Sirve cualquier tamaño grande; la web la optimiza después. Las fotos con personas reconocibles necesitan su permiso.
+    </p>
+  </section>
+
+  {paginas.map((pagina) => {
+    const deLaPagina = lista.filter((f) => f.pagina === pagina);
+    return (
+      <section class="contenedor fotos__pagina" aria-label={pagina}>
+        <h2>{pagina} <span class="fotos__cuenta">{deLaPagina.length}</span></h2>
+        <div class="fotos__tabla-envoltura">
+          <table class="fotos__tabla">
+            <thead>
+              <tr><th scope="col">Archivo</th><th scope="col">Dónde va</th><th scope="col">Qué debe mostrar</th><th scope="col">Formato</th></tr>
+            </thead>
+            <tbody>
+              {deLaPagina.map((f) => (
+                <tr>
+                  <td><code>{f.archivo}</code></td>
+                  <td>{f.seccion}</td>
+                  <td>{f.descripcion}{f.nota && <span class="fotos__nota">{f.nota}</span>}</td>
+                  <td class="fotos__formato">
+                    <span class:list={['fotos__icono', `fotos__icono--${f.formato}`]} aria-hidden="true"></span>
+                    {etiquetaFormato[f.formato]}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    );
+  })}
+</BaseLayout>
+
+<style>
+  .fotos__intro { padding-bottom: var(--espacio-6); }
+  code { font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 0.85em; word-break: break-all; }
+
+  .fotos__pagina { padding-block: var(--espacio-6); border-top: 1px solid var(--color-borde); }
+  .fotos__pagina h2 { font-size: var(--titulo-3); display: flex; align-items: center; gap: var(--espacio-3); }
+  .fotos__cuenta {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding-inline: 0.5rem;
+    border-radius: var(--radio-pill);
+    background: rgb(68 216 197 / 0.25);
+    font-size: var(--texto-sm);
+  }
+
+  .fotos__tabla-envoltura { overflow-x: auto; }
+  .fotos__tabla { width: 100%; min-width: 40rem; border-collapse: collapse; font-size: var(--texto-sm); }
+  .fotos__tabla th {
+    padding: var(--espacio-2) var(--espacio-3);
+    text-align: left;
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    color: var(--color-azul-oscuro);
+    border-bottom: 1.5px solid var(--color-aqua);
+  }
+  .fotos__tabla td { padding: var(--espacio-3); vertical-align: top; border-bottom: 1px solid var(--color-borde); }
+  .fotos__tabla td:first-child { width: 30%; }
+  .fotos__nota { display: block; margin-top: var(--espacio-1); color: var(--color-azul-oscuro); font-style: italic; }
+  .fotos__formato { white-space: nowrap; }
+  .fotos__icono {
+    display: inline-block;
+    margin-right: var(--espacio-2);
+    vertical-align: middle;
+    border: 1.5px solid var(--color-azul-oscuro);
+    border-radius: 2px;
+  }
+  .fotos__icono--horizontal { width: 21px; height: 14px; }
+  .fotos__icono--cuadrada { width: 16px; height: 16px; }
+  .fotos__icono--vertical { width: 14px; height: 18px; }
+</style>

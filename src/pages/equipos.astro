@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EncabezadoPagina from '../components/EncabezadoPagina.astro';
+import Catalogo from '../components/equipos/Catalogo.astro';
+import e from '../contenido/es/equipos';
+---
+<BaseLayout titulo={e.meta.titulo} descripcion={e.meta.descripcion} whatsappMensaje={e.meta.whatsapp} sinAlterno>
+  <EncabezadoPagina datos={e.encabezado} />
+  <Catalogo datos={e.catalogo} comoPedir={e.comoPedir} />
+</BaseLayout>

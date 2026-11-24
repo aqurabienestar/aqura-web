@@ -1,0 +1,18 @@
+# dependencias y build
+node_modules/
+dist/
+.astro/
+
+# entorno
+.env
+.env.*
+
+# sistema
+.DS_Store
+Thumbs.db
+npm-debug.log*
+
+# documentos internos: solo en este PC, nunca al repositorio
+docs/
+*.bundle
+.claude/settings.local.json

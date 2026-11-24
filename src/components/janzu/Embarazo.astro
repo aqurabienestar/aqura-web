@@ -1,0 +1,34 @@
+---
+import FotoPendiente from '../FotoPendiente.astro';
+import Texto from '../Texto.astro';
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['embarazo'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion embarazo" id="embarazo" aria-labelledby="t-embarazo">
+  <div class="contenedor embarazo__grid">
+    <FotoPendiente archivo={datos.foto} />
+    <div class="embarazo__texto">
+      <h2 id="t-embarazo">{datos.titulo}</h2>
+      {datos.parrafos.map((p) => <p>{p}</p>)}
+      <p class="embarazo__pendiente">
+        <span class="etiqueta">{datos.pendiente.etiqueta}</span>
+        <Texto texto={datos.pendiente.valor} />
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .embarazo { background: rgb(68 216 197 / 0.10); }
+  .embarazo__grid { display: grid; gap: var(--espacio-6); align-items: center; }
+  .embarazo__texto { max-width: var(--ancho-lectura); font-size: var(--texto-lg); }
+  .embarazo__pendiente { margin: var(--espacio-6) 0 0; font-size: var(--texto-base); }
+
+  @media (min-width: 960px) {
+    .embarazo__grid { grid-template-columns: 1fr 1.1fr; gap: var(--espacio-8); }
+  }
+</style>

@@ -1,0 +1,17 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Encabezado from '../../components/EncabezadoPagina.astro';
+import Precios from '../../components/sesiones/Precios.astro';
+import CierreWhatsapp from '../../components/CierreWhatsapp.astro';
+import s from '../../contenido/es/sesiones';
+---
+<BaseLayout
+  titulo={s.meta.titulo}
+  descripcion={s.meta.descripcion}
+  whatsappMensaje={s.meta.whatsapp}
+  sinAlterno
+>
+  <Encabezado datos={s.encabezado} />
+  <Precios datos={s.precios} />
+  <CierreWhatsapp titulo={s.cierre.titulo} acento={s.cierre.acento} boton={s.cierre.boton} />
+</BaseLayout>

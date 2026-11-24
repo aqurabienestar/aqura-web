@@ -1,0 +1,38 @@
+---
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['beneficios'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion beneficios" aria-labelledby="t-beneficios">
+  <div class="contenedor">
+    <h2 id="t-beneficios">{datos.titulo}</h2>
+    <div class="beneficios__grid">
+      {datos.grupos.map((g) => (
+        <div class="beneficios__grupo">
+          <h3>{g.titulo}</h3>
+          <ul class="lista-guion">
+            {g.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .beneficios__grid { display: grid; gap: var(--espacio-6); margin-top: var(--espacio-5); }
+  .beneficios__grupo h3 {
+    padding-bottom: var(--espacio-3);
+    border-bottom: 2px solid var(--color-aqua);
+    font-size: var(--titulo-4);
+    font-weight: 600;
+  }
+  .beneficios__grupo ul { margin: 0; }
+
+  @media (min-width: 960px) {
+    .beneficios__grid { grid-template-columns: repeat(3, 1fr); gap: var(--espacio-7); }
+  }
+</style>

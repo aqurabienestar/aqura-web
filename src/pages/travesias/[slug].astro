@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FotoPendiente from '../../components/FotoPendiente.astro';
+import Texto from '../../components/Texto.astro';
+import CierreWhatsapp from '../../components/CierreWhatsapp.astro';
+import t from '../../contenido/es/travesias';
+import type { Travesia } from '../../contenido/tipos';
+
+export function getStaticPaths() {
+  return t.archivo.items.map((travesia) => ({ params: { slug: travesia.slug }, props: { travesia } }));
+}
+
+interface Props {
+  travesia: Travesia;
+}
+const { travesia: v } = Astro.props;
+const e = t.etiquetas;
+const datos = [
+  { etiqueta: e.tipo, valor: v.tipo },
+  { etiqueta: e.fecha, valor: v.fecha },
+  { etiqueta: e.lugar, valor: v.lugar },
+  { etiqueta: e.conQuien, valor: v.conQuien },
+  { etiqueta: e.certificacion, valor: v.certificacion },
+];
+// Portada (_01) + dos fotos más de la galería (_02, _03)
+const galeria = [1, 2, 3].map((n) => v.fotoArchivo.replace(/_01$/, `_0${n}`));
+---
+<BaseLayout
+  titulo={v.nombre}
+  descripcion={`${v.nombre}. ${t.meta.descripcion}`}
+  whatsappMensaje={t.meta.whatsapp}
+  sinAlterno
+>
+  <article>
+    <header class="contenedor viaje__cabeza">
+      <a class="viaje__volver" href="/travesias">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M13 8H3M7 4 3 8l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        {e.volver}
+      </a>
+      <h1>{v.nombre}</h1>
+      <dl class="viaje__datos">
+        {datos.map((d) => (
+          <div><dt>{d.etiqueta}</dt><dd><Texto texto={d.valor} /></dd></div>
+        ))}
+      </dl>
+    </header>
+
+    <div class="contenedor viaje__cuerpo">
+      <section aria-labelledby="t-que">
+        <h2 id="t-que">{e.queSeHizo}</h2>
+        <p class="lectura"><Texto texto={v.queSeHizo} /></p>
+      </section>
+
+      <section aria-labelledby="t-fotos">
+        <h2 id="t-fotos">{e.fotos}</h2>
+        <div class="galeria">
+          {galeria.map((archivo) => <FotoPendiente archivo={archivo} />)}
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <CierreWhatsapp titulo={t.cierreTravesia.titulo} boton={t.cierreTravesia.boton} />
+</BaseLayout>
+
+<style>
+  .viaje__cabeza { padding-block: var(--espacio-6) var(--espacio-7); }
+  .viaje__volver {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    min-height: 2.75rem;
+    margin-bottom: var(--espacio-5);
+    font-family: var(--font-titulos);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .viaje__volver svg { width: 1.1em; height: 1.1em; }
+  .viaje__cabeza h1 { max-width: 48rem; }
+
+  .viaje__datos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--espacio-4) var(--espacio-6);
+    margin: var(--espacio-6) 0 0;
+    padding-top: var(--espacio-5);
+    border-top: 1px solid var(--color-borde);
+  }
+  .viaje__datos dt {
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-azul-oscuro);
+  }
+  .viaje__datos dd { margin: 0; }
+
+  .viaje__cuerpo { display: grid; gap: var(--espacio-7); padding-bottom: var(--espacio-9); }
+  .viaje__cuerpo h2 { font-size: var(--titulo-3); font-weight: 500; }
+
+  .galeria { display: grid; gap: var(--espacio-4); }
+  @media (min-width: 720px) {
+    .galeria { grid-template-columns: 1fr 1fr; }
+    .galeria > :first-child { grid-column: 1 / -1; }
+  }
+</style>

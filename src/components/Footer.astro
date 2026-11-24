@@ -1,0 +1,114 @@
+---
+import {
+  URL_INSTAGRAM,
+  USUARIO_INSTAGRAM,
+  WHATSAPP_VISIBLE,
+  enlaceWhatsapp,
+  idiomaDesdeUrl,
+  menuFooter,
+  rutaEn,
+  textos,
+} from '../i18n';
+
+const idioma = idiomaDesdeUrl(Astro.url);
+const t = textos(idioma);
+const anio = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="contenedor footer__grid">
+    <div class="footer__marca">
+      <a class="footer__logo" href={rutaEn(idioma, '/')} aria-label={t.ui.inicio}>
+        <img src="/logos/aqura-logotipo-azul.png" alt="" width="135" height="32" loading="lazy" />
+      </a>
+      <p class="footer__lema">{t.footer.lema}</p>
+      <p class="footer__ubicacion">{t.footer.ubicacion}</p>
+    </div>
+
+    <nav class="footer__col" aria-labelledby="footer-nav">
+      <h2 class="footer__titulo" id="footer-nav">{t.footer.tituloNavegacion}</h2>
+      <ul>
+        {menuFooter.map((item) => (
+          <li><a href={rutaEn(idioma, item.ruta)}>{t.nav[item.clave]}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <h2 class="footer__titulo">{t.footer.tituloContacto}</h2>
+      <ul>
+        <li>
+          <a href={enlaceWhatsapp(t.whatsapp.mensajePorDefecto)} target="_blank" rel="noopener">
+            {t.ui.whatsapp} · {WHATSAPP_VISIBLE}<span class="sr-only"> {t.ui.pestanaNueva}</span>
+          </a>
+        </li>
+        <li>
+          <a href={URL_INSTAGRAM} target="_blank" rel="noopener">
+            {t.footer.instagram} · {USUARIO_INSTAGRAM}<span class="sr-only"> {t.ui.pestanaNueva}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contenedor footer__legal">
+    <p>© {anio} AQURA. {t.footer.derechos}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--espacio-9);
+    padding-top: var(--espacio-8);
+    border-top: 1px solid var(--color-borde);
+    font-size: var(--texto-sm);
+  }
+
+  .footer__grid {
+    display: grid;
+    gap: var(--espacio-7);
+  }
+
+  /* Área de protección del logotipo */
+  .footer__logo { display: inline-block; padding: var(--espacio-3) 0; margin-bottom: var(--espacio-4); }
+  .footer__logo img { width: 135px; height: 32px; }
+
+  .footer__lema { margin-bottom: var(--espacio-1); font-size: var(--texto-base); }
+  .footer__ubicacion { margin: 0; color: var(--color-azul-oscuro); }
+
+  .footer__titulo {
+    margin-bottom: var(--espacio-4);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-azul-oscuro);
+  }
+
+  .footer__col ul { list-style: none; margin: 0; padding: 0; }
+  .footer__col li + li { margin-top: 0; }
+  .footer__col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    color: var(--color-texto);
+    text-decoration: none;
+  }
+  .footer__col a:hover {
+    color: var(--color-azul-oscuro);
+    text-decoration: underline;
+  }
+
+  .footer__legal {
+    margin-top: var(--espacio-8);
+    padding-block: var(--espacio-5) var(--espacio-8);
+    border-top: 1px solid var(--color-borde);
+    font-size: var(--texto-xs);
+    color: var(--color-azul-oscuro);
+  }
+  .footer__legal p { margin: 0; }
+
+  @media (min-width: 720px) {
+    .footer__grid { grid-template-columns: 1.4fr 1fr 1fr; }
+    .footer__legal { padding-bottom: var(--espacio-6); }
+  }
+</style>

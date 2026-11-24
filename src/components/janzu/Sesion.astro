@@ -1,0 +1,62 @@
+---
+import FotoPendiente from '../FotoPendiente.astro';
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['sesion'];
+}
+const { datos } = Astro.props;
+const listas = [datos.antes, datos.despues, datos.reprogramar];
+---
+<section class="seccion sesion" id="sesion" aria-labelledby="t-sesion">
+  <div class="contenedor">
+    <h2 id="t-sesion">{datos.titulo}</h2>
+
+    <div class="sesion__grid">
+      <dl class="sesion__formato">
+        {datos.formato.map((d) => (
+          <div>
+            <dt class="etiqueta">{d.etiqueta}</dt>
+            <dd>{d.valor}</dd>
+          </div>
+        ))}
+      </dl>
+      <FotoPendiente archivo={datos.foto} />
+    </div>
+
+    <div class="sesion__listas">
+      {listas.map((l, i) => (
+        <div class:list={['sesion__lista', { 'sesion__lista--aviso': i === 2 }]}>
+          <h3>{l.titulo}</h3>
+          <ul class="lista-guion">
+            {l.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sesion { border-top: 1px solid var(--color-borde); }
+  .sesion__grid { display: grid; gap: var(--espacio-6); margin-top: var(--espacio-5); align-items: start; }
+
+  .sesion__formato { margin: 0; display: grid; gap: var(--espacio-4); }
+  .sesion__formato div { padding-bottom: var(--espacio-3); border-bottom: 1px solid var(--color-borde); }
+  .sesion__formato dd { margin: var(--espacio-1) 0 0; }
+
+  .sesion__listas { display: grid; gap: var(--espacio-5); margin-top: var(--espacio-8); }
+  .sesion__lista {
+    padding: var(--espacio-5);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-md);
+  }
+  .sesion__lista h3 { font-size: var(--titulo-4); font-weight: 600; }
+  .sesion__lista ul { margin: 0; font-size: var(--texto-sm); }
+  .sesion__lista--aviso { background: var(--color-crema); border-color: transparent; }
+
+  @media (min-width: 960px) {
+    .sesion__grid { grid-template-columns: 1.2fr 1fr; gap: var(--espacio-8); }
+    .sesion__listas { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

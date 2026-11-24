@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Encabezado from '../../components/cursos-aida/Encabezado.astro';
+import TablaNiveles from '../../components/cursos-aida/TablaNiveles.astro';
+import FichaCurso from '../../components/cursos-aida/FichaCurso.astro';
+import CrossoverGrupos from '../../components/cursos-aida/CrossoverGrupos.astro';
+import ComoReservar from '../../components/cursos-aida/ComoReservar.astro';
+import PreguntasFrecuentes from '../../components/PreguntasFrecuentes.astro';
+import CierreWhatsapp from '../../components/CierreWhatsapp.astro';
+import c from '../../contenido/es/cursos-aida';
+---
+<BaseLayout
+  titulo={c.meta.titulo}
+  descripcion={c.meta.descripcion}
+  whatsappMensaje={c.meta.whatsapp}
+  sinAlterno
+>
+  <Encabezado datos={c.encabezado} />
+  <TablaNiveles datos={c.niveles} />
+
+  <div class="contenedor">
+    {c.cursos.map((curso) => <FichaCurso curso={curso} etiquetas={c.etiquetas} />)}
+  </div>
+
+  <CrossoverGrupos crossover={c.crossover} grupos={c.grupos} etiquetaPrecio={c.etiquetas.precio} />
+  <ComoReservar datos={c.reservar} />
+  <PreguntasFrecuentes titulo={c.preguntas.titulo} items={c.preguntas.items} />
+  <CierreWhatsapp titulo={c.cierre.titulo} acento={c.cierre.acento} boton={c.cierre.boton} />
+</BaseLayout>

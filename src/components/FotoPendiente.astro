@@ -1,0 +1,61 @@
+---
+// Espacio reservado para una foto que aún no ha llegado.
+// Toma la descripción y el formato del registro src/contenido/fotos.ts.
+import { etiquetaFormato, foto, proporcionDe } from '../contenido/fotos';
+
+interface Props {
+  archivo: string;
+  /** Sobrescribe la proporción del registro (por ejemplo, para encajar en una tarjeta). */
+  proporcion?: string;
+  class?: string;
+}
+const { archivo, proporcion, class: clase } = Astro.props;
+const f = foto(archivo);
+---
+<div
+  class:list={['foto-pendiente', clase]}
+  style={`aspect-ratio: ${proporcion ?? proporcionDe[f.formato]}`}
+  role="img"
+  aria-label={`Foto pendiente: ${f.descripcion}`}
+  data-archivo={archivo}
+>
+  <img src="/logos/aqura-isotipo-turquesa.png" alt="" width="886" height="946" loading="lazy" />
+  <p aria-hidden="true"><span class="por-definir">[FOTO]</span> {f.descripcion}</p>
+  <code aria-hidden="true">{archivo} · {etiquetaFormato[f.formato]}</code>
+</div>
+
+<style>
+  .foto-pendiente {
+    position: relative;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: var(--espacio-3);
+    width: 100%;
+    padding: var(--espacio-5);
+    overflow: hidden;
+    border-radius: var(--radio-md);
+    background:
+      linear-gradient(160deg, rgb(68 216 197 / 0.18), rgb(0 183 182 / 0.10) 55%, rgb(0 104 122 / 0.12));
+  }
+  .foto-pendiente img {
+    width: clamp(2.5rem, 14%, 4.5rem);
+    height: auto;
+    opacity: 0.35;
+  }
+  .foto-pendiente p {
+    max-width: 28rem;
+    margin: 0;
+    font-size: var(--texto-sm);
+    line-height: 1.45;
+    text-align: center;
+    color: var(--color-texto);
+  }
+  .foto-pendiente code {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--color-azul-oscuro);
+    word-break: break-all;
+    text-align: center;
+  }
+</style>

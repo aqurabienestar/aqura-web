@@ -1,0 +1,37 @@
+---
+import FotoPendiente from '../FotoPendiente.astro';
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['lugar'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion lugar" aria-labelledby="t-lugar">
+  <div class="contenedor lugar__grid">
+    <div>
+      <h2 id="t-lugar">{datos.titulo}</h2>
+      {datos.sitios.map((s) => (
+        <p class="lugar__sitio">{s.destacado && <strong>{s.destacado}. </strong>}{s.texto}</p>
+      ))}
+      <p class="lugar__horario">
+        <span class="etiqueta">{datos.horario.etiqueta}</span>
+        {datos.horario.valor}
+      </p>
+      <p class="lugar__nota">{datos.nota}</p>
+    </div>
+    <FotoPendiente archivo={datos.foto} />
+  </div>
+</section>
+
+<style>
+  .lugar { border-top: 1px solid var(--color-borde); }
+  .lugar__grid { display: grid; gap: var(--espacio-6); align-items: center; }
+  .lugar__sitio strong { font-family: var(--font-titulos); font-size: 0.95em; font-weight: 600; }
+  .lugar__horario { margin-top: var(--espacio-5); }
+  .lugar__nota { color: var(--color-azul-oscuro); font-style: italic; }
+
+  @media (min-width: 960px) {
+    .lugar__grid { grid-template-columns: 1fr 1.1fr; gap: var(--espacio-8); }
+  }
+</style>

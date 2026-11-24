@@ -1,0 +1,189 @@
+---
+import BotonWhatsapp from '../BotonWhatsapp.astro';
+import FotoPendiente from '../FotoPendiente.astro';
+import type { Curso, PaginaCursosAida } from '../../contenido/tipos';
+
+interface Props {
+  curso: Curso;
+  etiquetas: PaginaCursosAida['etiquetas'];
+}
+const { curso, etiquetas: e } = Astro.props;
+const idTitulo = `t-${curso.ancla}`;
+---
+<article class="ficha" id={curso.ancla} aria-labelledby={idTitulo}>
+  <header class="ficha__cabeza">
+    <h2 class="ficha__titulo" id={idTitulo}>
+      <span class="ficha__nivel">{curso.nivel}</span><span class="sr-only"> · </span>
+      <span class="ficha__nombre">{curso.nombre}</span>
+    </h2>
+    <p class="ficha__bajada">{curso.bajada}</p>
+  </header>
+
+  <div class="ficha__cuerpo">
+    <div class="ficha__principal">
+      <p>{curso.descripcion}</p>
+
+      {curso.paraQuien && (
+        <>
+          <h3 class="ficha__sub">{e.paraQuien}</h3>
+          <p>{curso.paraQuien}</p>
+        </>
+      )}
+
+      <h3 class="ficha__sub">{e.queTeLlevas}</h3>
+      <ul class="ficha__lista">
+        {curso.queTeLlevas.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <h3 class="ficha__sub">{e.requisitos}</h3>
+      <ul class="ficha__lista">
+        {curso.requisitos.map((item) => <li>{item}</li>)}
+      </ul>
+
+      {curso.paraCertificarte && (
+        <details class="ficha__desplegable">
+          <summary>
+            <span>{e.paraCertificarte}</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+              <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </summary>
+          <ul class="ficha__lista">
+            {curso.paraCertificarte.map((item) => <li>{item}</li>)}
+          </ul>
+        </details>
+      )}
+    </div>
+
+    <aside class="ficha__lateral" aria-label={`${curso.nivel}: ${e.duracion.toLowerCase()} y ${e.precio.toLowerCase()}`}>
+      <FotoPendiente archivo={curso.fotoArchivo} />
+      <div class="ficha__resumen">
+        <dl>
+          <div>
+            <dt>{e.duracion}</dt>
+            <dd>
+              <span class="ficha__dato">{curso.duracion.resumen}</span>
+              <span class="ficha__detalle">{curso.duracion.detalle}</span>
+            </dd>
+          </div>
+          <div>
+            <dt>{e.precio}</dt>
+            <dd><span class="ficha__dato">{curso.precio}</span></dd>
+          </div>
+        </dl>
+        <BotonWhatsapp texto={curso.boton.texto} mensaje={curso.boton.mensaje} class="ficha__boton" />
+      </div>
+    </aside>
+  </div>
+</article>
+
+<style>
+  .ficha {
+    padding-block: var(--espacio-8);
+    border-top: 1px solid var(--color-borde);
+  }
+
+  .ficha__cabeza { margin-bottom: var(--espacio-6); max-width: 48rem; }
+  .ficha__titulo { margin-bottom: var(--espacio-3); }
+  .ficha__nivel {
+    display: block;
+    margin-bottom: var(--espacio-2);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-azul-oscuro);
+  }
+  .ficha__nombre { display: block; }
+  .ficha__bajada {
+    margin: 0;
+    font-size: var(--texto-lg);
+    font-style: italic;
+    color: var(--color-azul-oscuro);
+  }
+
+  .ficha__cuerpo { display: grid; gap: var(--espacio-6); }
+  .ficha__principal { max-width: var(--ancho-lectura); }
+
+  .ficha__sub {
+    margin: var(--espacio-6) 0 var(--espacio-3);
+    font-size: var(--titulo-4);
+    font-weight: 600;
+  }
+
+  .ficha__lista { list-style: none; padding: 0; }
+  .ficha__lista li {
+    position: relative;
+    padding-left: 1.4em;
+  }
+  .ficha__lista li::before {
+    content: '';
+    position: absolute;
+    left: 0.15em;
+    top: 0.72em;
+    width: 0.5em;
+    height: 1.5px;
+    background: var(--color-turquesa);
+  }
+
+  /* Desplegable "Para certificarte" */
+  .ficha__desplegable {
+    margin-top: var(--espacio-6);
+    border-block: 1px solid var(--color-borde);
+  }
+  .ficha__desplegable summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-4);
+    min-height: 3.25rem;
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-4);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .ficha__desplegable summary::-webkit-details-marker { display: none; }
+  .ficha__desplegable summary svg {
+    width: 0.9em;
+    height: 0.9em;
+    flex: none;
+    color: var(--color-azul-oscuro);
+    transition: transform var(--transicion);
+  }
+  .ficha__desplegable[open] summary svg { transform: rotate(180deg); }
+  .ficha__desplegable summary:hover { color: var(--color-azul-oscuro); }
+  .ficha__desplegable .ficha__lista { margin-bottom: var(--espacio-5); }
+
+  /* Lateral: foto, duración, precio y botón */
+  .ficha__lateral { display: grid; gap: var(--espacio-4); align-content: start; }
+  .ficha__resumen {
+    padding: var(--espacio-5);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-md);
+  }
+  .ficha__resumen dl { margin: 0 0 var(--espacio-5); display: grid; gap: var(--espacio-4); }
+  .ficha__resumen dt {
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-azul-oscuro);
+  }
+  .ficha__resumen dd { margin: 0; }
+  .ficha__dato {
+    display: block;
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-4);
+    font-weight: 600;
+  }
+  .ficha__detalle { display: block; font-size: var(--texto-sm); }
+  :global(.ficha__boton) { width: 100%; }
+
+  @media (min-width: 960px) {
+    .ficha { padding-block: var(--espacio-9); }
+    .ficha__cuerpo { grid-template-columns: minmax(0, 1fr) 22rem; gap: var(--espacio-8); }
+    .ficha__lateral { position: sticky; top: calc(var(--alto-header) + var(--espacio-5)); }
+  }
+</style>

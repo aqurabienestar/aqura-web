@@ -1,0 +1,41 @@
+/* Qartella y Mairo: archivos propios en public/fonts. Montserrat: @fontsource (importada en el layout). */
+
+@font-face {
+  font-family: 'Qartella';
+  src: url('/fonts/Qartella-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Qartella';
+  src: url('/fonts/Qartella-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Qartella';
+  src: url('/fonts/Qartella-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Qartella';
+  src: url('/fonts/Qartella-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mairo';
+  src: url('/fonts/Mairo.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

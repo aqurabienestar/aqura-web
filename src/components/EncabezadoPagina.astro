@@ -1,0 +1,72 @@
+---
+// Encabezado de página interior: antetítulo, H1, frase y, opcionalmente, párrafo, botón de WhatsApp y foto.
+import BotonWhatsapp from './BotonWhatsapp.astro';
+import FotoPendiente from './FotoPendiente.astro';
+import Texto from './Texto.astro';
+import type { EncabezadoDatos } from '../contenido/tipos';
+
+interface Props {
+  datos: EncabezadoDatos;
+}
+const { datos } = Astro.props;
+const conDetalle = Boolean(datos.parrafo || datos.boton);
+const conFoto = Boolean(datos.foto);
+---
+<section class="encabezado">
+  {conFoto ? (
+    <div class="contenedor encabezado__grid encabezado__grid--foto">
+      <div class="encabezado__texto">
+        <span class="antetitulo">{datos.antetitulo}</span>
+        <h1>{datos.titulo}</h1>
+        {datos.frase && <p class="entrada encabezado__frase"><Texto texto={datos.frase} /></p>}
+        {datos.parrafo && <p class="encabezado__parrafo"><Texto texto={datos.parrafo} /></p>}
+        {datos.boton && <BotonWhatsapp texto={datos.boton.texto} mensaje={datos.boton.mensaje} grande />}
+      </div>
+      <FotoPendiente archivo={datos.foto!} />
+    </div>
+  ) : (
+    <div class:list={['contenedor', 'encabezado__grid', { 'encabezado__grid--doble': conDetalle }]}>
+      <div>
+        <span class="antetitulo">{datos.antetitulo}</span>
+        <h1>{datos.titulo}</h1>
+        {datos.frase && <p class="entrada encabezado__frase"><Texto texto={datos.frase} /></p>}
+      </div>
+      {conDetalle && (
+        <div class="encabezado__detalle">
+          {datos.parrafo && <p><Texto texto={datos.parrafo} /></p>}
+          {datos.boton && <BotonWhatsapp texto={datos.boton.texto} mensaje={datos.boton.mensaje} grande />}
+        </div>
+      )}
+    </div>
+  )}
+</section>
+
+<style>
+  .encabezado { padding-block: var(--espacio-7) var(--espacio-8); }
+  .encabezado__grid { display: grid; gap: var(--espacio-6); }
+  .encabezado__frase { max-width: 32rem; margin: 0; }
+  .encabezado__detalle {
+    max-width: var(--ancho-lectura);
+    padding-top: var(--espacio-6);
+    border-top: 1px solid var(--color-borde);
+  }
+  .encabezado__detalle p { margin-bottom: var(--espacio-6); }
+  .encabezado__detalle p:last-child { margin-bottom: 0; }
+
+  /* Con foto: texto y foto lado a lado */
+  .encabezado__grid--foto { align-items: center; }
+  .encabezado__texto .encabezado__frase { max-width: 36rem; margin-bottom: var(--espacio-6); }
+  .encabezado__parrafo { max-width: var(--ancho-lectura); margin-bottom: var(--espacio-6); }
+
+  @media (min-width: 960px) {
+    .encabezado { padding-block: var(--espacio-9); }
+    .encabezado__grid--doble { grid-template-columns: 1.1fr 1fr; gap: var(--espacio-8); align-items: end; }
+    .encabezado__grid--doble .encabezado__detalle {
+      padding-top: 0;
+      padding-left: var(--espacio-7);
+      border-top: 0;
+      border-left: 1px solid var(--color-borde);
+    }
+    .encabezado__grid--foto { grid-template-columns: 1.1fr 1fr; gap: var(--espacio-8); }
+  }
+</style>

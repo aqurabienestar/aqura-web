@@ -1,0 +1,54 @@
+---
+import FotoPendiente from '../FotoPendiente.astro';
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['facilitador'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion facilitador" aria-labelledby="t-facilitador">
+  <div class="contenedor facilitador__grid">
+    <FotoPendiente archivo={datos.foto} class="facilitador__foto" />
+    <div>
+      <h2 id="t-facilitador">{datos.titulo}</h2>
+      <p class="facilitador__nombre">{datos.nombre}</p>
+      <p class="facilitador__credenciales">{datos.credenciales}</p>
+      <blockquote class="facilitador__cita">
+        <p>{datos.cita}</p>
+        <footer>{datos.nombre}</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<style>
+  .facilitador { border-top: 1px solid var(--color-borde); }
+  .facilitador__grid { display: grid; gap: var(--espacio-6); align-items: center; }
+  .facilitador__foto { max-width: 24rem; }
+  .facilitador__nombre {
+    margin-bottom: var(--espacio-2);
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-4);
+    font-weight: 600;
+  }
+  .facilitador__credenciales { max-width: var(--ancho-lectura); color: var(--color-azul-oscuro); }
+
+  .facilitador__cita {
+    margin: var(--espacio-6) 0 0;
+    padding-left: var(--espacio-5);
+    border-left: 2px solid var(--color-aqua);
+    max-width: var(--ancho-lectura);
+  }
+  .facilitador__cita p { font-size: var(--texto-lg); font-style: italic; }
+  .facilitador__cita footer {
+    font-family: var(--font-titulos);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+  }
+  .facilitador__cita footer::before { content: '— '; }
+
+  @media (min-width: 960px) {
+    .facilitador__grid { grid-template-columns: 1fr 1.6fr; gap: var(--espacio-8); }
+  }
+</style>

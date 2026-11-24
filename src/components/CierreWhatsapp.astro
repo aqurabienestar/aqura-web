@@ -1,0 +1,40 @@
+---
+import BotonWhatsapp from './BotonWhatsapp.astro';
+import type { Boton } from '../contenido/tipos';
+
+interface Props {
+  /** Texto del título; "{acento}" se reemplaza por la palabra en Mairo. */
+  titulo: string;
+  acento?: string;
+  boton: Boton;
+}
+const { titulo, acento, boton } = Astro.props;
+const [antes, despues] = acento ? titulo.split('{acento}') : [titulo, undefined];
+---
+<!-- Fondo azul oscuro sólido: es el fondo válido para el imagotipo blanco -->
+<section class="cierre fondo-azul">
+  <div class="contenedor cierre__interior">
+    <img class="cierre__logo" src="/logos/aqura-imagotipo-blanco.png" alt="AQURA" width="876" height="1002" loading="lazy" />
+    <h2 class="cierre__titulo">
+      {antes}{acento && <span class="acento">{acento}</span>}{despues}
+    </h2>
+    <BotonWhatsapp texto={boton.texto} mensaje={boton.mensaje} variante="claro" grande />
+  </div>
+</section>
+
+<style>
+  .cierre {
+    margin-bottom: calc(var(--espacio-9) * -1); /* se une con el footer sin hueco doble */
+    padding-block: var(--espacio-9);
+    text-align: center;
+  }
+  .cierre__interior { display: grid; justify-items: center; gap: var(--espacio-6); }
+  .cierre__logo { width: 6rem; height: auto; margin-bottom: var(--espacio-4); }
+  .cierre__titulo {
+    max-width: 36rem;
+    margin: 0;
+    font-size: var(--titulo-2);
+    font-weight: 500;
+  }
+  .cierre__titulo .acento { font-size: 1.2em; }
+</style>

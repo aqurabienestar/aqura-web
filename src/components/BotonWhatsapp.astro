@@ -1,0 +1,25 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { enlaceWhatsapp, idiomaDesdeUrl, textos } from '../i18n';
+
+interface Props {
+  texto: string;
+  mensaje: string;
+  variante?: 'primario' | 'secundario' | 'claro';
+  grande?: boolean;
+  class?: string;
+}
+
+const { texto, mensaje, variante = 'primario', grande = false, class: clase } = Astro.props;
+const t = textos(idiomaDesdeUrl(Astro.url));
+---
+<a
+  class:list={['btn', `btn--${variante}`, { 'btn--grande': grande }, clase]}
+  href={enlaceWhatsapp(mensaje)}
+  target="_blank"
+  rel="noopener"
+>
+  <IconoWhatsapp />
+  {texto}
+  <span class="sr-only">{t.ui.pestanaNueva}</span>
+</a>

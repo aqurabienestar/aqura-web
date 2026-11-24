@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Portada from '../components/home/Portada.astro';
+import Ofertas from '../components/home/Ofertas.astro';
+import Adelantos from '../components/home/Adelantos.astro';
+import Contacto from '../components/home/Contacto.astro';
+import h from '../contenido/es/home';
+---
+<BaseLayout descripcion={h.meta.descripcion}>
+  <Portada datos={h.portada} />
+  <Ofertas datos={h.ofertas} />
+  <Adelantos travesia={h.travesia} equipos={h.equipos} bitacora={h.bitacora} />
+  <Contacto datos={h.contacto} />
+</BaseLayout>

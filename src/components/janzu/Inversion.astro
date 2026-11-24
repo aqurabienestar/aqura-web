@@ -1,0 +1,79 @@
+---
+import BotonWhatsapp from '../BotonWhatsapp.astro';
+import Texto from '../Texto.astro';
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['inversion'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion inversion" id="reservar" aria-labelledby="t-inversion">
+  <div class="contenedor">
+    <h2 id="t-inversion">{datos.titulo}</h2>
+
+    {datos.mostrarPrecios ? (
+      <>
+        <ul class="inversion__precios">
+          {datos.modalidades.map((m) => (
+            <li class="inversion__precio">
+              <h3>{m.nombre}</h3>
+              <p class="inversion__valor">{m.precio} <span>COP</span></p>
+              {m.nota && <p class="inversion__nota">{m.nota}</p>}
+            </li>
+          ))}
+        </ul>
+        <p class="inversion__argumento">{datos.argumento}</p>
+      </>
+    ) : (
+      <p class="entrada inversion__sin-precios">{datos.textoSinPrecios}</p>
+    )}
+
+    <dl class="inversion__condiciones">
+      {datos.condiciones.map((c) => (
+        <div>
+          <dt>{c.etiqueta}</dt>
+          <dd><Texto texto={c.valor} /></dd>
+        </div>
+      ))}
+    </dl>
+
+    <BotonWhatsapp texto={datos.boton.texto} mensaje={datos.boton.mensaje} grande />
+  </div>
+</section>
+
+<style>
+  .inversion { background: rgb(68 216 197 / 0.10); }
+
+  .inversion__precios { list-style: none; margin: var(--espacio-5) 0 var(--espacio-4); padding: 0; display: grid; gap: var(--espacio-4); }
+  .inversion__precios li + li { margin-top: 0; }
+  .inversion__precio { padding: var(--espacio-5); background: var(--color-blanco); border-radius: var(--radio-md); }
+  .inversion__precio h3 { margin-bottom: var(--espacio-2); font-size: var(--texto-base); font-weight: 500; }
+  .inversion__valor {
+    margin: 0;
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-3);
+    font-weight: 600;
+    color: var(--color-azul-oscuro);
+  }
+  .inversion__valor span { font-size: var(--texto-sm); font-weight: 500; }
+  .inversion__nota { margin: var(--espacio-2) 0 0; font-size: var(--texto-sm); }
+  .inversion__argumento { margin-bottom: var(--espacio-6); }
+  .inversion__sin-precios { max-width: 36rem; margin-bottom: var(--espacio-7); }
+
+  .inversion__condiciones { display: grid; gap: var(--espacio-3); max-width: 44rem; margin: 0 0 var(--espacio-6); }
+  .inversion__condiciones div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--espacio-1) var(--espacio-4);
+    padding-bottom: var(--espacio-3);
+    border-bottom: 1px dashed rgb(1 65 84 / 0.2);
+  }
+  .inversion__condiciones dt { font-family: var(--font-titulos); font-size: var(--texto-sm); font-weight: 600; }
+  .inversion__condiciones dd { margin: 0; font-size: var(--texto-sm); }
+
+  @media (min-width: 720px) {
+    .inversion__precios { grid-template-columns: repeat(2, minmax(0, 18rem)); }
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+import Texto from '../Texto.astro';
+import FotoPendiente from '../FotoPendiente.astro';
+import { idiomaDesdeUrl, rutaEn } from '../../i18n';
+import type { PaginaHome } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaHome['ofertas'];
+}
+const { datos } = Astro.props;
+const idioma = idiomaDesdeUrl(Astro.url);
+---
+<section class="seccion ofertas" aria-labelledby="t-ofertas">
+  <div class="contenedor">
+    <h2 id="t-ofertas" class="sr-only">{datos.tituloOculto}</h2>
+    <ul class="ofertas__grid">
+      {datos.items.map((o) => (
+        <li>
+          <a class:list={['oferta', o.tono === 'azul' ? 'fondo-azul' : 'fondo-aqua']} href={rutaEn(idioma, o.enlace.ruta)}>
+            <FotoPendiente archivo={o.foto} proporcion="16 / 9" class="oferta__foto" />
+            <span class="oferta__ante">{o.antetitulo}</span>
+            <h3 class="oferta__titulo">{o.titulo}</h3>
+            <p class="oferta__texto"><Texto texto={o.texto} /></p>
+            <span class="oferta__enlace">
+              {o.enlace.texto}
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ofertas__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--espacio-4);
+  }
+  .ofertas__grid li + li { margin-top: 0; }
+
+  .oferta {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 16rem;
+    padding: var(--espacio-6) var(--espacio-5);
+    border-radius: var(--radio-md);
+    text-decoration: none;
+    transition: transform var(--transicion);
+  }
+  .oferta:hover { transform: translateY(-3px); }
+  .oferta :global(.oferta__foto) { margin-bottom: var(--espacio-5); background: rgb(255 255 255 / 0.85); }
+  .oferta.fondo-azul, .oferta.fondo-azul:hover { color: var(--color-blanco); }
+  .oferta.fondo-aqua, .oferta.fondo-aqua:hover { color: var(--color-texto); }
+
+  .oferta__ante {
+    margin-bottom: var(--espacio-3);
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .oferta__titulo { margin-bottom: var(--espacio-4); font-size: var(--titulo-3); font-weight: 600; color: inherit !important; }
+  .oferta__texto { max-width: 30rem; margin-bottom: var(--espacio-6); }
+
+  .oferta__enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    margin-top: auto;
+    font-family: var(--font-titulos);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+  }
+  .oferta__enlace svg { width: 1.1em; height: 1.1em; transition: transform var(--transicion); }
+  .oferta:hover .oferta__enlace svg { transform: translateX(4px); }
+
+  @media (min-width: 720px) {
+    .ofertas__grid { grid-template-columns: repeat(2, 1fr); gap: var(--espacio-5); }
+    .oferta { min-height: 19rem; padding: var(--espacio-7) var(--espacio-6); }
+  }
+</style>

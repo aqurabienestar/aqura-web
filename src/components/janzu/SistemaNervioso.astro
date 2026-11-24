@@ -1,0 +1,30 @@
+---
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['sistemaNervioso'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion sistema fondo-azul" aria-labelledby="t-sistema">
+  <div class="contenedor sistema__grid">
+    <div>
+      <span class="etiqueta">{datos.antetitulo}</span>
+      <h2 id="t-sistema" class="sistema__titulo">{datos.titulo}</h2>
+    </div>
+    <div class="sistema__texto">
+      {datos.parrafos.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sistema__grid { display: grid; gap: var(--espacio-5); }
+  .sistema__titulo { margin-top: var(--espacio-3); }
+  .sistema__texto { max-width: var(--ancho-lectura); }
+  .sistema__texto p:last-child { margin-bottom: 0; }
+
+  @media (min-width: 960px) {
+    .sistema__grid { grid-template-columns: 1fr 1.5fr; gap: var(--espacio-8); }
+  }
+</style>

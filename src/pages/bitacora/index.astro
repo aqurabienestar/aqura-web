@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EncabezadoPagina from '../../components/EncabezadoPagina.astro';
+import Texto from '../../components/Texto.astro';
+import FotoPendiente from '../../components/FotoPendiente.astro';
+import b from '../../contenido/es/bitacora';
+---
+<BaseLayout titulo={b.meta.titulo} descripcion={b.meta.descripcion} whatsappMensaje={b.meta.whatsapp} sinAlterno>
+  <EncabezadoPagina datos={b.encabezado} />
+
+  <!-- Sin fechas visibles, para que la bitácora no se vea abandonada -->
+  <div class="contenedor entradas">
+    {b.entradas.map((entrada) => (
+      <article class="entrada-item" aria-labelledby={`t-${entrada.slug}`}>
+        <FotoPendiente archivo={entrada.foto} proporcion="21 / 9" class="entrada-item__foto" />
+        <h2 id={`t-${entrada.slug}`}>
+          <a href={`/bitacora/${entrada.slug}`}>{entrada.titulo}</a>
+        </h2>
+        <p class="lectura"><Texto texto={entrada.extracto} /></p>
+        <a class="btn btn--texto" href={`/bitacora/${entrada.slug}`} aria-describedby={`t-${entrada.slug}`}>{b.leer}</a>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .entradas { padding-bottom: var(--espacio-9); }
+  .entrada-item {
+    padding-block: var(--espacio-7);
+    border-top: 1px solid var(--color-borde);
+  }
+  .entrada-item :global(.entrada-item__foto) { margin-bottom: var(--espacio-5); }
+  .entrada-item h2 { max-width: 44rem; font-size: var(--titulo-2); font-weight: 500; }
+  .entrada-item h2 a { color: inherit; text-decoration: none; }
+  .entrada-item h2 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+</style>

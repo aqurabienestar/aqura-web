@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Texto from '../../components/Texto.astro';
+import FotoPendiente from '../../components/FotoPendiente.astro';
+import b from '../../contenido/es/bitacora';
+import type { EntradaBitacora } from '../../contenido/tipos';
+
+export function getStaticPaths() {
+  return b.entradas.map((entrada) => ({ params: { slug: entrada.slug }, props: { entrada } }));
+}
+
+interface Props {
+  entrada: EntradaBitacora;
+}
+const { entrada } = Astro.props;
+---
+<BaseLayout titulo={entrada.titulo} descripcion={b.meta.descripcion} whatsappMensaje={b.meta.whatsapp} sinAlterno>
+  <article class="contenedor articulo">
+    <header>
+      <a class="articulo__volver" href="/bitacora">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M13 8H3M7 4 3 8l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        {b.volver}
+      </a>
+      <span class="antetitulo">{b.meta.titulo}</span>
+      <h1>{entrada.titulo}</h1>
+      <FotoPendiente archivo={entrada.foto} class="articulo__portada" />
+    </header>
+
+    {entrada.notaSeguridad && (
+      <aside class="articulo__nota" aria-labelledby="t-nota">
+        <h2 id="t-nota" class="articulo__nota-titulo">{b.tituloNota}</h2>
+        <p>{entrada.notaSeguridad}</p>
+      </aside>
+    )}
+
+    <div class="articulo__cuerpo">
+      {entrada.cuerpo.map((parrafo) => <p><Texto texto={parrafo} /></p>)}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .articulo { max-width: calc(var(--ancho-lectura) + 2 * var(--margen-lateral)); padding-block: var(--espacio-6) var(--espacio-9); }
+  .articulo__volver {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    min-height: 2.75rem;
+    margin-bottom: var(--espacio-6);
+    font-family: var(--font-titulos);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .articulo__volver svg { width: 1.1em; height: 1.1em; }
+  .articulo h1 { font-size: var(--titulo-2); margin-bottom: var(--espacio-6); }
+  .articulo :global(.articulo__portada) { margin-bottom: var(--espacio-7); }
+
+  /* Nota de seguridad visible: acento naranja mínimo en el borde */
+  .articulo__nota {
+    margin-bottom: var(--espacio-7);
+    padding: var(--espacio-5);
+    background: var(--color-crema);
+    border-left: 3px solid var(--color-naranja);
+    border-radius: 0 var(--radio-sm) var(--radio-sm) 0;
+  }
+  .articulo__nota-titulo {
+    margin-bottom: var(--espacio-2);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .articulo__nota p { margin: 0; }
+
+  .articulo__cuerpo { font-size: var(--texto-lg); }
+</style>

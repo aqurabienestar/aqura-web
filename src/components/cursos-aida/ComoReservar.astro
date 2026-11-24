@@ -1,0 +1,81 @@
+---
+import Texto from '../Texto.astro';
+import type { PaginaCursosAida } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaCursosAida['reservar'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion reservar" id="reservar" aria-labelledby="t-reservar">
+  <div class="contenedor reservar__grid">
+    <div>
+      <h2 id="t-reservar">{datos.titulo}</h2>
+      <p class="entrada">{datos.intro}</p>
+    </div>
+
+    <div>
+      <ol class="pasos">
+        {datos.pasos.map((paso, i) => (
+          <li>
+            <span class="pasos__num" aria-hidden="true">{i + 1}</span>
+            <p>{paso}</p>
+          </li>
+        ))}
+      </ol>
+
+      <dl class="reservar__datos">
+        {datos.datos.map((d) => (
+          <div>
+            <dt>{d.etiqueta}</dt>
+            <dd><Texto texto={d.valor} /></dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reservar { border-top: 1px solid var(--color-borde); }
+  .reservar__grid { display: grid; gap: var(--espacio-6); }
+
+  .pasos { list-style: none; margin: 0 0 var(--espacio-7); padding: 0; counter-reset: none; }
+  .pasos li {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    gap: var(--espacio-4);
+    align-items: start;
+    padding-block: var(--espacio-4);
+  }
+  .pasos li + li { margin-top: 0; border-top: 1px solid var(--color-borde); }
+  .pasos__num {
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-2);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--color-azul-oscuro);
+  }
+  .pasos p { margin: 0; padding-top: 0.2em; }
+
+  .reservar__datos { display: grid; gap: var(--espacio-4); margin: 0; }
+  .reservar__datos div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--espacio-2) var(--espacio-4);
+    padding-bottom: var(--espacio-3);
+    border-bottom: 1px dashed var(--color-borde);
+  }
+  .reservar__datos dt {
+    font-family: var(--font-titulos);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+  }
+  .reservar__datos dd { margin: 0; }
+
+  @media (min-width: 960px) {
+    .reservar__grid { grid-template-columns: 1fr 1.3fr; gap: var(--espacio-8); }
+  }
+</style>

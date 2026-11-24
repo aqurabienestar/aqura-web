@@ -1,0 +1,79 @@
+/* ==========================================================
+   AQURA · tokens de diseño
+   Fuente: CLAUDE.md y .claude/skills/aqura-brand/SKILL.md
+   ========================================================== */
+
+:root {
+  /* Colores principales: pueden ser fondo */
+  --color-azul-oscuro: #00687A;
+  --color-turquesa:    #00B7B6;
+  --color-aqua:        #44D8C5;
+
+  /* Color de texto: NUNCA fondo */
+  --color-texto:       #014154;
+
+  /* Acentos: nunca dominantes */
+  --color-lima:        #CEE290;
+  --color-crema:       #EFEDC3;
+  --color-naranja:     #FF8000;
+
+  /* Básicos del manual */
+  --color-gris-oscuro: #333333;
+  --color-gris-claro:  #E6E6E6;
+  --color-blanco:      #FFFFFF;
+
+  /* Roles */
+  --color-fondo:        var(--color-blanco);
+  --color-borde:        var(--color-gris-claro);
+  --color-enlace:       var(--color-azul-oscuro);
+  --color-foco:         var(--color-azul-oscuro);
+
+  /* Degradado permitido: familia de azules y turquesas */
+  --degradado-agua: linear-gradient(160deg, var(--color-azul-oscuro) 0%, var(--color-turquesa) 60%, var(--color-aqua) 100%);
+
+  /* Tipografía */
+  --font-titulos: 'Montserrat', system-ui, sans-serif;
+  --font-cuerpo:  'Qartella', 'Montserrat', system-ui, sans-serif;
+  --font-acento:  'Mairo', Georgia, serif;
+
+  /* Escala tipográfica fluida (375 px → 1280 px) */
+  --texto-xs:   0.8125rem;                                  /* 13 */
+  --texto-sm:   0.9375rem;                                  /* 15 */
+  --texto-base: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); /* 17 → 19 */
+  --texto-lg:   clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem); /* 19 → 22 */
+  --titulo-4:   clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --titulo-3:   clamp(1.375rem, 1.25rem + 0.6vw, 1.75rem);
+  --titulo-2:   clamp(1.75rem, 1.5rem + 1.1vw, 2.5rem);
+  --titulo-1:   clamp(2.25rem, 1.8rem + 2vw, 3.5rem);
+
+  --interlineado-cuerpo:  1.65;
+  --interlineado-titulos: 1.15;
+
+  /* Espaciado: ritmo amplio, mucho blanco */
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 0.75rem;
+  --espacio-4: 1rem;
+  --espacio-5: 1.5rem;
+  --espacio-6: 2rem;
+  --espacio-7: 3rem;
+  --espacio-8: 4.5rem;
+  --espacio-9: clamp(4.5rem, 3rem + 6vw, 8rem);
+
+  /* Layout */
+  --ancho-max:     72rem;
+  --ancho-lectura: 40rem;
+  --margen-lateral: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --alto-header:   4.5rem;
+
+  /* Formas y movimiento */
+  --radio-sm: 0.375rem;
+  --radio-md: 0.75rem;
+  --radio-pill: 999px;
+  --sombra-suave: 0 6px 24px rgb(1 65 84 / 0.12);
+  --transicion: 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --transicion: 0ms; }
+}

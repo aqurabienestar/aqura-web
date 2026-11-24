@@ -1,0 +1,29 @@
+---
+// Estructura: docs/janzu.md §13.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EncabezadoPagina from '../components/EncabezadoPagina.astro';
+import QueEs from '../components/janzu/QueEs.astro';
+import SistemaNervioso from '../components/janzu/SistemaNervioso.astro';
+import Beneficios from '../components/janzu/Beneficios.astro';
+import Embarazo from '../components/janzu/Embarazo.astro';
+import Sesion from '../components/janzu/Sesion.astro';
+import Facilitador from '../components/janzu/Facilitador.astro';
+import Inversion from '../components/janzu/Inversion.astro';
+import Lugar from '../components/janzu/Lugar.astro';
+import PreguntasFrecuentes from '../components/PreguntasFrecuentes.astro';
+import CierreWhatsapp from '../components/CierreWhatsapp.astro';
+import j from '../contenido/es/janzu';
+---
+<BaseLayout titulo={j.meta.titulo} descripcion={j.meta.descripcion} whatsappMensaje={j.meta.whatsapp} sinAlterno>
+  <EncabezadoPagina datos={j.encabezado} />
+  <QueEs datos={j.queEs} />
+  <SistemaNervioso datos={j.sistemaNervioso} />
+  <Beneficios datos={j.beneficios} />
+  <Embarazo datos={j.embarazo} />
+  <Sesion datos={j.sesion} />
+  <Facilitador datos={j.facilitador} />
+  <Inversion datos={j.inversion} />
+  <Lugar datos={j.lugar} />
+  <PreguntasFrecuentes titulo={j.preguntas.titulo} items={j.preguntas.items} />
+  <CierreWhatsapp titulo={j.cierre.titulo} acento={j.cierre.acento} boton={j.cierre.boton} />
+</BaseLayout>

@@ -1,0 +1,77 @@
+---
+import BotonWhatsapp from '../BotonWhatsapp.astro';
+import { enlaceWhatsapp, idiomaDesdeUrl, textos } from '../../i18n';
+import type { PaginaSesiones } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaSesiones['precios'];
+}
+const { datos } = Astro.props;
+const t = textos(idiomaDesdeUrl(Astro.url));
+---
+<section class="seccion precios" id="precios" aria-labelledby="t-precios">
+  <div class="contenedor">
+    <h2 id="t-precios">{datos.titulo}</h2>
+    <p class="precios__nota">{datos.nota}</p>
+
+    <ul class="precios__lista">
+      {datos.modalidades.map((m) => (
+        <li class="precio">
+          <h3 class="precio__nombre">{m.nombre}</h3>
+          <p class="precio__valor">{m.precio}</p>
+          {m.boton && (
+            <a class="btn btn--texto precio__enlace" href={enlaceWhatsapp(m.boton.mensaje)} target="_blank" rel="noopener">
+              {m.boton.texto}<span class="sr-only"> {t.ui.pestanaNueva}</span>
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <BotonWhatsapp texto={datos.boton.texto} mensaje={datos.boton.mensaje} grande />
+  </div>
+</section>
+
+<style>
+  .precios { background: rgb(68 216 197 / 0.10); }
+  .precios__nota { margin-bottom: var(--espacio-6); font-size: var(--texto-sm); color: var(--color-azul-oscuro); }
+
+  .precios__lista {
+    list-style: none;
+    margin: 0 0 var(--espacio-7);
+    padding: 0;
+    display: grid;
+    gap: var(--espacio-4);
+  }
+  .precios__lista li + li { margin-top: 0; }
+
+  .precio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+    padding: var(--espacio-5);
+    background: var(--color-blanco);
+    border-radius: var(--radio-md);
+  }
+  .precio__nombre {
+    margin: 0;
+    font-size: var(--texto-base);
+    font-weight: 500;
+  }
+  .precio__valor {
+    margin: 0;
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-3);
+    font-weight: 600;
+    color: var(--color-azul-oscuro);
+  }
+  .precio__enlace { align-self: flex-start; margin-top: auto; padding-top: var(--espacio-2); }
+
+  @media (min-width: 600px) {
+    .precios__lista { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .precios__lista { grid-template-columns: repeat(4, 1fr); }
+    .precio { padding: var(--espacio-6) var(--espacio-5); min-height: 11rem; }
+  }
+</style>

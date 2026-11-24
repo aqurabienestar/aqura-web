@@ -1,0 +1,57 @@
+---
+import { idiomaDesdeUrl, rutaBase, rutaEn, textos, type Idioma } from '../i18n';
+
+const idioma = idiomaDesdeUrl(Astro.url);
+const t = textos(idioma);
+const base = rutaBase(Astro.url.pathname);
+const opciones: { codigo: Idioma; etiqueta: string; nombre: string }[] = [
+  { codigo: 'es', etiqueta: 'ES', nombre: 'Español' },
+  { codigo: 'en', etiqueta: 'EN', nombre: 'English' },
+];
+---
+<nav class="idioma" aria-label={t.ui.idioma}>
+  {opciones.map((op, i) => (
+    <>
+      {i > 0 && <span class="idioma__sep" aria-hidden="true">/</span>}
+      <a
+        href={rutaEn(op.codigo, base)}
+        hreflang={op.codigo}
+        lang={op.codigo}
+        aria-label={op.nombre}
+        aria-current={op.codigo === idioma ? 'true' : undefined}
+      >{op.etiqueta}</a>
+    </>
+  ))}
+</nav>
+
+<style>
+  .idioma {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-1);
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .idioma a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    color: var(--color-azul-oscuro);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .idioma a:hover { color: var(--color-texto); }
+  .idioma a[aria-current] {
+    color: var(--color-texto);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--color-turquesa);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+  .idioma__sep { opacity: 0.35; }
+</style>

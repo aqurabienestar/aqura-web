@@ -1,0 +1,85 @@
+---
+import BotonWhatsapp from '../BotonWhatsapp.astro';
+import FotoPendiente from '../FotoPendiente.astro';
+import type { PaginaCursosAida } from '../../contenido/tipos';
+
+interface Props {
+  crossover: PaginaCursosAida['crossover'];
+  grupos: PaginaCursosAida['grupos'];
+  etiquetaPrecio: string;
+}
+const { crossover, grupos, etiquetaPrecio } = Astro.props;
+---
+<section class="seccion otras">
+  <div class="contenedor otras__grid">
+    <article class="tarjeta fondo-azul" id="crossover" aria-labelledby="t-crossover">
+      <h2 id="t-crossover">{crossover.titulo}</h2>
+      <p>{crossover.texto}</p>
+      <p class="tarjeta__precio">
+        <span class="tarjeta__etiqueta">{etiquetaPrecio}</span>
+        {crossover.precio}
+      </p>
+      <BotonWhatsapp texto={crossover.boton.texto} mensaje={crossover.boton.mensaje} variante="claro" />
+    </article>
+
+    <article class="tarjeta tarjeta--borde" id="grupos" aria-labelledby="t-grupos">
+      <FotoPendiente archivo={grupos.foto} proporcion="21 / 9" class="tarjeta__foto" />
+      <h2 id="t-grupos">{grupos.titulo}</h2>
+      <p>{grupos.texto}</p>
+      <ul class="tarjeta__lista">
+        {grupos.puntos.map((p) => (
+          <li><strong>{p.titulo}</strong> {p.texto}</li>
+        ))}
+      </ul>
+      <BotonWhatsapp texto={grupos.boton.texto} mensaje={grupos.boton.mensaje} variante="secundario" />
+    </article>
+  </div>
+</section>
+
+<style>
+  .otras { border-top: 1px solid var(--color-borde); }
+  .otras__grid { display: grid; gap: var(--espacio-5); }
+
+  .tarjeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--espacio-6) var(--espacio-5);
+    border-radius: var(--radio-md);
+  }
+  .tarjeta h2 { font-size: var(--titulo-3); }
+  .tarjeta > :global(.btn) { margin-top: auto; }
+  .tarjeta--borde { border: 1px solid var(--color-borde); }
+  .tarjeta :global(.tarjeta__foto) { margin-bottom: var(--espacio-5); }
+
+  .tarjeta__precio {
+    margin: var(--espacio-2) 0 var(--espacio-6);
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-3);
+    font-weight: 600;
+  }
+  .tarjeta__etiqueta {
+    display: block;
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tarjeta__lista { list-style: none; padding: 0; margin-bottom: var(--espacio-6); }
+  .tarjeta__lista li { padding-left: 1.4em; position: relative; }
+  .tarjeta__lista li::before {
+    content: '';
+    position: absolute;
+    left: 0.15em;
+    top: 0.72em;
+    width: 0.5em;
+    height: 1.5px;
+    background: var(--color-turquesa);
+  }
+
+  @media (min-width: 840px) {
+    .otras__grid { grid-template-columns: 1fr 1.35fr; gap: var(--espacio-6); }
+    .tarjeta { padding: var(--espacio-7) var(--espacio-6); }
+  }
+</style>

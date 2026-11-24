@@ -1,0 +1,76 @@
+---
+// Próxima travesía, adelanto de Equipos y última entrada de la Bitácora.
+import ProximaTravesia from '../ProximaTravesia.astro';
+import FotoPendiente from '../FotoPendiente.astro';
+import Texto from '../Texto.astro';
+import { idiomaDesdeUrl, rutaEn } from '../../i18n';
+import type { PaginaHome } from '../../contenido/tipos';
+
+interface Props {
+  travesia: PaginaHome['travesia'];
+  equipos: PaginaHome['equipos'];
+  bitacora: PaginaHome['bitacora'];
+}
+const { travesia, equipos, bitacora } = Astro.props;
+const idioma = idiomaDesdeUrl(Astro.url);
+---
+<ProximaTravesia datos={travesia} />
+
+<!-- Equipos -->
+<section class="seccion bloque" aria-labelledby="t-equipos">
+  <div class="contenedor bloque__grid bloque__grid--foto">
+    <FotoPendiente archivo={equipos.fotoArchivo} />
+    <div>
+      <span class="antetitulo">{equipos.antetitulo}</span>
+      <h2 id="t-equipos">{equipos.titulo}</h2>
+      <p class="lectura">{equipos.texto}</p>
+      <p class="precio"><span>{equipos.precio.etiqueta}</span> <Texto texto={equipos.precio.valor} /></p>
+      <a class="btn btn--secundario" href={rutaEn(idioma, equipos.enlace.ruta)}>{equipos.enlace.texto}</a>
+    </div>
+  </div>
+</section>
+
+<!-- Bitácora: sin fechas visibles -->
+<section class="seccion bloque" aria-labelledby="t-bitacora">
+  <div class="contenedor">
+    <span class="antetitulo">{bitacora.antetitulo}</span>
+    <FotoPendiente archivo={bitacora.foto} proporcion="21 / 9" class="entrada-blog__foto" />
+    <article class="entrada-blog">
+      <h2 id="t-bitacora" class="entrada-blog__titulo">
+        <a href={rutaEn(idioma, bitacora.enlace.ruta)}>{bitacora.titulo}</a>
+      </h2>
+      <p><Texto texto={bitacora.extracto} /></p>
+    </article>
+    <a class="btn btn--texto" href={rutaEn(idioma, bitacora.enlaceTodo.ruta)}>{bitacora.enlaceTodo.texto}</a>
+  </div>
+</section>
+
+<style>
+  .bloque { border-top: 1px solid var(--color-borde); }
+  .bloque__grid { display: grid; gap: var(--espacio-6); align-items: center; }
+
+  .precio { margin-bottom: var(--espacio-6); }
+  .precio > span:first-child {
+    margin-right: var(--espacio-2);
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-azul-oscuro);
+  }
+
+  :global(.entrada-blog__foto) { margin-block: var(--espacio-3) var(--espacio-5); }
+  .entrada-blog {
+    max-width: 48rem;
+    margin-bottom: var(--espacio-5);
+  }
+  .entrada-blog__titulo { font-size: var(--titulo-2); font-weight: 500; }
+  .entrada-blog__titulo a { color: inherit; text-decoration: none; }
+  .entrada-blog__titulo a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+
+  @media (min-width: 960px) {
+    .bloque__grid { gap: var(--espacio-8); }
+    .bloque__grid--foto { grid-template-columns: 1fr 1.1fr; }
+  }
+</style>

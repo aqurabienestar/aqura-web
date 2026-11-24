@@ -1,0 +1,49 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { enlaceWhatsapp, idiomaDesdeUrl, textos } from '../i18n';
+
+interface Props {
+  mensaje: string;
+}
+
+const { mensaje } = Astro.props;
+const t = textos(idiomaDesdeUrl(Astro.url));
+---
+<a
+  class="wa-flotante"
+  href={enlaceWhatsapp(mensaje)}
+  target="_blank"
+  rel="noopener"
+  aria-label={`${t.ui.whatsappFlotante} ${t.ui.pestanaNueva}`}
+>
+  <IconoWhatsapp />
+</a>
+
+<style>
+  .wa-flotante {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--color-azul-oscuro);
+    color: var(--color-blanco);
+    box-shadow: var(--sombra-suave);
+    transition: background-color var(--transicion), color var(--transicion), transform var(--transicion);
+  }
+  .wa-flotante :global(svg) { width: 1.6rem; height: 1.6rem; }
+  .wa-flotante:hover {
+    background: var(--color-aqua);
+    color: var(--color-texto);
+    transform: translateY(-2px);
+  }
+  .wa-flotante:focus-visible { outline-offset: 4px; }
+
+  @media (min-width: 960px) {
+    .wa-flotante { right: 2rem; bottom: 2rem; width: 3.75rem; height: 3.75rem; }
+  }
+</style>

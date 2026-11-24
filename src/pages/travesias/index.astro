@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EncabezadoPagina from '../../components/EncabezadoPagina.astro';
+import ProximaTravesia from '../../components/ProximaTravesia.astro';
+import TarjetaTravesia from '../../components/travesias/TarjetaTravesia.astro';
+import t from '../../contenido/es/travesias';
+---
+<BaseLayout titulo={t.meta.titulo} descripcion={t.meta.descripcion} whatsappMensaje={t.meta.whatsapp} sinAlterno>
+  <EncabezadoPagina datos={t.encabezado} />
+
+  <!-- Arriba: la próxima travesía, para que la página no se vea inactiva -->
+  <ProximaTravesia datos={t.proxima} destacada />
+
+  <section class="seccion archivo" aria-labelledby="t-archivo">
+    <div class="contenedor">
+      <h2 id="t-archivo">{t.archivo.titulo}</h2>
+      <ul class="archivo__grid">
+        {t.archivo.items.map((item) => (
+          <li><TarjetaTravesia travesia={item} etiquetas={t.etiquetas} /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .archivo__grid {
+    list-style: none;
+    margin: var(--espacio-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--espacio-4);
+  }
+  .archivo__grid li + li { margin-top: 0; }
+  @media (min-width: 720px) { .archivo__grid { grid-template-columns: repeat(2, 1fr); gap: var(--espacio-5); } }
+  @media (min-width: 1100px) { .archivo__grid { grid-template-columns: repeat(4, 1fr); } }
+</style>

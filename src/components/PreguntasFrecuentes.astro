@@ -1,0 +1,65 @@
+---
+import Texto from './Texto.astro';
+import type { Pregunta } from '../contenido/tipos';
+
+interface Props {
+  titulo: string;
+  items: Pregunta[];
+}
+const { titulo, items } = Astro.props;
+---
+<section class="seccion faq" id="preguntas" aria-labelledby="t-faq">
+  <div class="contenedor faq__grid">
+    <h2 id="t-faq">{titulo}</h2>
+    <div class="faq__lista">
+      {items.map((item) => (
+        <details class="faq__item">
+          <summary>
+            <span>{item.pregunta}</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+              <path d="M6 2v8M2 6h8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </summary>
+          <p><Texto texto={item.respuesta} /></p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq { background: rgb(68 216 197 / 0.10); }
+  .faq__grid { display: grid; gap: var(--espacio-6); }
+
+  .faq__item { border-bottom: 1px solid rgb(1 65 84 / 0.15); }
+  .faq__item:first-child { border-top: 1px solid rgb(1 65 84 / 0.15); }
+  .faq__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-4);
+    min-height: 3.5rem;
+    padding-block: var(--espacio-3);
+    font-family: var(--font-titulos);
+    font-size: var(--texto-base);
+    font-weight: 500;
+    line-height: 1.35;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary:hover { color: var(--color-azul-oscuro); }
+  .faq__item summary svg {
+    width: 0.85em;
+    height: 0.85em;
+    flex: none;
+    color: var(--color-azul-oscuro);
+    transition: transform var(--transicion);
+  }
+  .faq__item[open] summary svg { transform: rotate(45deg); }
+  .faq__item p { max-width: var(--ancho-lectura); padding-bottom: var(--espacio-4); }
+
+  @media (min-width: 960px) {
+    .faq__grid { grid-template-columns: 1fr 2fr; gap: var(--espacio-8); }
+  }
+</style>

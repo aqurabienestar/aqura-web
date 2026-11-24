@@ -1,0 +1,47 @@
+---
+import BotonWhatsapp from '../BotonWhatsapp.astro';
+import { URL_INSTAGRAM, USUARIO_INSTAGRAM, WHATSAPP_VISIBLE, idiomaDesdeUrl, rutaEn, textos } from '../../i18n';
+import type { PaginaHome } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaHome['contacto'];
+}
+const { datos } = Astro.props;
+const idioma = idiomaDesdeUrl(Astro.url);
+const t = textos(idioma);
+---
+<!-- Fondo azul oscuro sólido: fondo válido para el imagotipo blanco -->
+<section class="contacto fondo-azul" aria-labelledby="t-contacto">
+  <div class="contenedor contacto__interior">
+    <img class="contacto__logo" src="/logos/aqura-imagotipo-blanco.png" alt="" width="876" height="1002" loading="lazy" />
+    <h2 id="t-contacto">{datos.titulo}</h2>
+    <ul class="contacto__lista">
+      <li>{t.ui.whatsapp} · {WHATSAPP_VISIBLE}</li>
+      <li>
+        <a href={URL_INSTAGRAM} target="_blank" rel="noopener">
+          {datos.instagram} · {USUARIO_INSTAGRAM}<span class="sr-only"> {t.ui.pestanaNueva}</span>
+        </a>
+      </li>
+    </ul>
+    <div class="contacto__acciones">
+      <BotonWhatsapp texto={datos.boton.texto} mensaje={datos.boton.mensaje} variante="claro" grande />
+      <a class="contacto__mas" href={rutaEn(idioma, datos.enlace.ruta)}>{datos.enlace.texto}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacto {
+    margin-bottom: calc(var(--espacio-9) * -1); /* se une con el footer */
+    padding-block: var(--espacio-9);
+    text-align: center;
+  }
+  .contacto__interior { display: grid; justify-items: center; gap: var(--espacio-4); }
+  .contacto__logo { width: 6rem; height: auto; margin-bottom: var(--espacio-4); }
+  .contacto h2 { margin: 0; }
+  .contacto__lista { list-style: none; margin: 0 0 var(--espacio-4); padding: 0; }
+  .contacto__lista li + li { margin-top: var(--espacio-1); }
+  .contacto a:not(.btn) { color: var(--color-blanco); }
+  .contacto__acciones { display: grid; justify-items: center; gap: var(--espacio-4); }
+  .contacto__mas { font-family: var(--font-titulos); font-size: var(--texto-sm); font-weight: 600; }
+</style>

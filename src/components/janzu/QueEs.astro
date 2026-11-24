@@ -1,0 +1,71 @@
+---
+import FotoPendiente from '../FotoPendiente.astro';
+import type { PaginaJanzu } from '../../contenido/tipos';
+
+interface Props {
+  datos: PaginaJanzu['queEs'];
+}
+const { datos } = Astro.props;
+---
+<section class="seccion que-es" id="que-es" aria-labelledby="t-que-es">
+  <div class="contenedor">
+    <h2 id="t-que-es">{datos.titulo}</h2>
+
+    <ul class="pilares">
+      {datos.pilares.map((p) => (
+        <li>
+          <span class="pilares__titulo">{p.titulo}</span>
+          <p>{p.texto}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="que-es__grid">
+      <div class="que-es__texto">
+        {datos.parrafos.map((p) => (
+          <p>{p.destacado && <strong>{p.destacado} </strong>}{p.texto}</p>
+        ))}
+        <p class="que-es__firma">{datos.firma}</p>
+      </div>
+      <FotoPendiente archivo={datos.foto} class="que-es__foto" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .que-es { border-top: 1px solid var(--color-borde); }
+
+  .pilares {
+    list-style: none;
+    margin: var(--espacio-5) 0 var(--espacio-8);
+    padding: 0;
+    display: grid;
+    gap: var(--espacio-5);
+  }
+  .pilares li + li { margin-top: 0; }
+  .pilares li { padding-top: var(--espacio-4); border-top: 2px solid var(--color-aqua); }
+  .pilares__titulo {
+    display: block;
+    margin-bottom: var(--espacio-2);
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-4);
+    font-weight: 600;
+  }
+  .pilares p { margin: 0; }
+
+  .que-es__grid { display: grid; gap: var(--espacio-7); align-items: start; }
+  .que-es__texto { max-width: var(--ancho-lectura); font-size: var(--texto-lg); }
+  .que-es__texto strong { font-family: var(--font-titulos); font-size: 0.9em; font-weight: 600; }
+  .que-es__firma {
+    margin-top: var(--espacio-6);
+    font-style: italic;
+    color: var(--color-azul-oscuro);
+  }
+
+  @media (min-width: 720px) {
+    .pilares { grid-template-columns: repeat(3, 1fr); gap: var(--espacio-6); }
+  }
+  @media (min-width: 960px) {
+    .que-es__grid { grid-template-columns: 1.4fr 1fr; gap: var(--espacio-8); }
+  }
+</style>

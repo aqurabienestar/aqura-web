@@ -1,0 +1,8 @@
+---
+// Muestra un texto y resalta cada "[POR DEFINIR]" que contenga.
+interface Props {
+  texto: string;
+}
+const partes = Astro.props.texto.split(/(\[POR DEFINIR\])/);
+---
+{partes.map((p) => (p === '[POR DEFINIR]' ? <span class="por-definir">[POR DEFINIR]</span> : p))}

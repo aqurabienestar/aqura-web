@@ -1,0 +1,81 @@
+---
+import '@fontsource/montserrat/latin-400.css';
+import '@fontsource/montserrat/latin-500.css';
+import '@fontsource/montserrat/latin-600.css';
+import '@fontsource/montserrat/latin-700.css';
+import '../styles/fuentes.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappFlotante from '../components/WhatsappFlotante.astro';
+import { idiomaDesdeUrl, rutaBase, rutaEn, textos } from '../i18n';
+
+interface Props {
+  /** Título de la página, sin la marca. Vacío en el home. */
+  titulo?: string;
+  descripcion?: string;
+  /** Mensaje precargado del botón de WhatsApp para esta página. */
+  whatsappMensaje?: string;
+  /** Páginas internas (como /estilos) no se indexan. */
+  noIndexar?: boolean;
+  /** Si la página aún no existe en el otro idioma, no se anuncia el alterno. */
+  sinAlterno?: boolean;
+}
+
+const idioma = idiomaDesdeUrl(Astro.url);
+const t = textos(idioma);
+const {
+  titulo,
+  descripcion = t.meta.descripcion,
+  whatsappMensaje = t.whatsapp.mensajePorDefecto,
+  noIndexar = false,
+  sinAlterno = false,
+} = Astro.props;
+
+const tituloCompleto = titulo ? `${titulo} · ${t.meta.tituloSitio}` : t.meta.tituloSitio;
+const base = rutaBase(Astro.url.pathname);
+const canonica = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang={idioma}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    {noIndexar && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonica} />
+    {!sinAlterno && (
+      <>
+        <link rel="alternate" hreflang="es" href={new URL(rutaEn('es', base), Astro.site)} />
+        <link rel="alternate" hreflang="en" href={new URL(rutaEn('en', base), Astro.site)} />
+        <link rel="alternate" hreflang="x-default" href={new URL(rutaEn('es', base), Astro.site)} />
+      </>
+    )}
+
+    <meta name="theme-color" content="#00687A" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="preload" href="/fonts/Qartella-Regular.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AQURA" />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:locale" content={idioma === 'es' ? 'es_CO' : 'en_US'} />
+    <meta property="og:url" content={canonica} />
+  </head>
+  <body>
+    <a class="saltar-contenido" href="#contenido">{t.ui.saltarContenido}</a>
+    <Header whatsappMensaje={whatsappMensaje} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsappFlotante mensaje={whatsappMensaje} />
+  </body>
+</html>

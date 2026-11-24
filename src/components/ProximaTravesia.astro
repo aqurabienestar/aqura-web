@@ -1,0 +1,54 @@
+---
+// Próxima travesía + lista de espera por WhatsApp. Se usa en el Home y arriba en Travesías.
+import BotonWhatsapp from './BotonWhatsapp.astro';
+import Texto from './Texto.astro';
+import { idiomaDesdeUrl, rutaEn } from '../i18n';
+import type { ProximaTravesiaDatos } from '../contenido/tipos';
+
+interface Props {
+  datos: ProximaTravesiaDatos;
+  destacada?: boolean;
+}
+const { datos, destacada = false } = Astro.props;
+const idioma = idiomaDesdeUrl(Astro.url);
+---
+<section class:list={['seccion', 'proxima', { 'proxima--destacada': destacada }]} aria-labelledby="t-proxima">
+  <div class="contenedor proxima__grid">
+    <div>
+      <span class="antetitulo" id="t-proxima-ante">{datos.antetitulo}</span>
+      <h2 id="t-proxima" aria-describedby="t-proxima-ante"><Texto texto={datos.titulo} /></h2>
+      <dl class="proxima__datos">
+        {datos.datos.map((d) => (
+          <div><dt>{d.etiqueta}</dt><dd><Texto texto={d.valor} /></dd></div>
+        ))}
+      </dl>
+    </div>
+    <div class="proxima__acciones">
+      <BotonWhatsapp texto={datos.boton.texto} mensaje={datos.boton.mensaje} />
+      {datos.enlace && <a class="btn btn--texto" href={rutaEn(idioma, datos.enlace.ruta)}>{datos.enlace.texto}</a>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .proxima { border-top: 1px solid var(--color-borde); }
+  .proxima--destacada { border-top: 0; background: rgb(68 216 197 / 0.10); }
+  .proxima__grid { display: grid; gap: var(--espacio-6); align-items: center; }
+  .proxima__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-5); }
+
+  .proxima__datos { display: flex; flex-wrap: wrap; gap: var(--espacio-4) var(--espacio-7); margin: var(--espacio-5) 0 0; }
+  .proxima__datos dt {
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-azul-oscuro);
+  }
+  .proxima__datos dd { margin: 0; }
+
+  @media (min-width: 960px) {
+    .proxima__grid { grid-template-columns: 1.4fr 1fr; gap: var(--espacio-8); }
+    .proxima__acciones { justify-content: flex-end; }
+  }
+</style>

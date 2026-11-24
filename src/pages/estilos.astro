@@ -1,0 +1,344 @@
+---
+// Página interna para revisar el sistema base. No se indexa ni aparece en el menú.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IconoWhatsapp from '../components/IconoWhatsapp.astro';
+
+const principales = [
+  { nombre: 'Azul oscuro', hex: '#00687A', variable: '--color-azul-oscuro', rol: 'Principal. Puede ser fondo.', textoClaro: true },
+  { nombre: 'Turquesa', hex: '#00B7B6', variable: '--color-turquesa', rol: 'Principal. Puede ser fondo.' },
+  { nombre: 'Aqua', hex: '#44D8C5', variable: '--color-aqua', rol: 'Principal. Puede ser fondo.' },
+];
+const texto = { nombre: 'Texto', hex: '#014154', variable: '--color-texto', rol: 'Solo texto. Nunca fondo.' };
+const acentos = [
+  { nombre: 'Lima', hex: '#CEE290', variable: '--color-lima', rol: 'Acento. Nunca dominante.' },
+  { nombre: 'Crema', hex: '#EFEDC3', variable: '--color-crema', rol: 'Acento. Nunca dominante.' },
+  { nombre: 'Naranja', hex: '#FF8000', variable: '--color-naranja', rol: 'Acento mínimo.' },
+];
+const basicos = [
+  { nombre: 'Gris oscuro', hex: '#333333', variable: '--color-gris-oscuro', rol: 'Básico del manual.' },
+  { nombre: 'Gris claro', hex: '#E6E6E6', variable: '--color-gris-claro', rol: 'Bordes y divisiones.' },
+];
+
+const logos = [
+  { archivo: 'aqura-logotipo-azul.png', uso: 'Header y footer sobre fondo claro', fondo: 'claro', ancho: 966, alto: 230, horizontal: true },
+  { archivo: 'aqura-imagotipo-color.png', uso: 'Portada y piezas grandes sobre fondo claro', fondo: 'claro', ancho: 882, alto: 1008 },
+  { archivo: 'aqura-imagotipo-blanco.png', uso: 'Sobre azul oscuro o fotos oscuras', fondo: 'azul', ancho: 876, alto: 1002 },
+  { archivo: 'aqura-imagotipo-isotipo-blanco.png', uso: 'Sobre turquesa', fondo: 'turquesa', ancho: 876, alto: 1002 },
+  { archivo: 'aqura-imagotipo-isotipo-blanco.png', uso: 'Sobre aqua', fondo: 'aqua', ancho: 876, alto: 1002 },
+  { archivo: 'aqura-isotipo-turquesa.png', uso: 'Ícono suelto, marca de agua, favicon', fondo: 'claro', ancho: 886, alto: 946 },
+];
+
+const muestraCuerpo =
+  'Los cursos siguen el estándar internacional de AIDA y se enseñan desde la Apnea Integrativa: técnica, fisiología, seguridad y trabajo mental en cada inmersión. La certificación es internacional.';
+---
+<BaseLayout titulo="Estilos" noIndexar sinAlterno>
+  <header class="contenedor seccion estilos__intro">
+    <span class="antetitulo">Sistema base</span>
+    <h1>Estilos</h1>
+    <p class="entrada lectura">Referencia interna de colores, tipografías, botones y logos. Esta página no se indexa ni aparece en el menú.</p>
+  </header>
+
+  <!-- ===================== Colores ===================== -->
+  <section class="contenedor estilos__bloque" aria-labelledby="t-colores">
+    <h2 id="t-colores">Colores</h2>
+
+    <h3 class="estilos__sub">Principales</h3>
+    <ul class="paleta">
+      {principales.map((c) => (
+        <li class="color">
+          <div class="color__muestra color__muestra--grande" style={`background: var(${c.variable})`}></div>
+          <p class="color__nombre">{c.nombre}</p>
+          <p class="color__dato"><code>{c.hex}</code> · <code>{c.variable}</code></p>
+          <p class="color__rol">{c.rol}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h3 class="estilos__sub">Texto</h3>
+    <div class="color color--texto">
+      <p class="color__ejemplo">AQURA</p>
+      <p class="color__nombre">{texto.nombre}</p>
+      <p class="color__dato"><code>{texto.hex}</code> · <code>{texto.variable}</code></p>
+      <p class="color__rol">{texto.rol}</p>
+    </div>
+
+    <h3 class="estilos__sub">Acentos y básicos</h3>
+    <ul class="paleta paleta--pequena">
+      {[...acentos, ...basicos].map((c) => (
+        <li class="color">
+          <div class="color__muestra" style={`background: var(${c.variable})`}></div>
+          <p class="color__nombre">{c.nombre}</p>
+          <p class="color__dato"><code>{c.hex}</code></p>
+          <p class="color__rol">{c.rol}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h3 class="estilos__sub">Degradado permitido</h3>
+    <div class="degradado fondo-degradado">
+      <code>--degradado-agua</code>
+    </div>
+  </section>
+
+  <!-- ===================== Tipografía ===================== -->
+  <section class="contenedor estilos__bloque" aria-labelledby="t-tipografia">
+    <h2 id="t-tipografia">Tipografía</h2>
+
+    <div class="tipo">
+      <p class="tipo__etiqueta">Montserrat · títulos y subtítulos · <code>--font-titulos</code></p>
+      <p class="h1-muestra">Cursos de apnea AIDA</p>
+      <p class="h2-muestra">Cuál curso es para ti</p>
+      <p class="h3-muestra">AIDA 2 · Apneísta</p>
+      <p class="h4-muestra">Qué te llevas</p>
+      <span class="antetitulo">Antetítulo</span>
+    </div>
+
+    <div class="tipo">
+      <p class="tipo__etiqueta">Qartella · cuerpo de texto · <code>--font-cuerpo</code></p>
+      <p class="entrada lectura">Aprende a descender con técnica, calma y seguridad, desde tu primera inmersión hasta el nivel de asistente de instructor.</p>
+      <p class="lectura">{muestraCuerpo}</p>
+      <dl class="pesos">
+        <div><dt>Light 300</dt><dd style="font-weight:300">Técnica, calma y seguridad</dd></div>
+        <div><dt>Regular 400</dt><dd style="font-weight:400">Técnica, calma y seguridad</dd></div>
+        <div><dt>Italic 400</dt><dd style="font-style:italic">Técnica, calma y seguridad</dd></div>
+        <div><dt>Bold 700</dt><dd style="font-weight:700">Técnica, calma y seguridad</dd></div>
+      </dl>
+    </div>
+
+    <div class="tipo">
+      <p class="tipo__etiqueta">Mairo · solo acentos · clase <code>.acento</code></p>
+      <p class="h2-muestra">Apnea, respiración y autoconocimiento, <span class="acento">a tu ritmo</span>.</p>
+      <p class="tipo__nota">Para resaltar una palabra o frase corta. Nunca en párrafos ni en navegación.</p>
+    </div>
+
+    <div class="tipo">
+      <p class="tipo__etiqueta">Contenido pendiente · clase <code>.por-definir</code></p>
+      <p>Política de cancelación: <span class="por-definir">[POR DEFINIR]</span></p>
+    </div>
+  </section>
+
+  <!-- ===================== Botones ===================== -->
+  <section class="contenedor estilos__bloque" aria-labelledby="t-botones">
+    <h2 id="t-botones">Botones</h2>
+
+    <div class="botones">
+      <p class="tipo__etiqueta">Sobre fondo claro</p>
+      <div class="botones__fila">
+        <a class="btn btn--primario" href="#t-botones">Consultar fechas por WhatsApp</a>
+        <a class="btn btn--primario" href="#t-botones"><IconoWhatsapp />Reservar por WhatsApp</a>
+        <a class="btn btn--secundario" href="#t-botones">Ver cursos</a>
+        <a class="btn btn--texto" href="#t-botones">Leer más</a>
+      </div>
+      <div class="botones__fila">
+        <a class="btn btn--primario btn--grande" href="#t-botones">Botón grande</a>
+        <button class="btn btn--secundario" type="button">Botón (elemento button)</button>
+      </div>
+    </div>
+
+    <div class="botones fondo-azul">
+      <p class="tipo__etiqueta">Sobre azul oscuro</p>
+      <div class="botones__fila">
+        <a class="btn btn--claro" href="#t-botones">Agendar por WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="botones fondo-turquesa">
+      <p class="tipo__etiqueta">Sobre turquesa</p>
+      <div class="botones__fila">
+        <a class="btn btn--claro" href="#t-botones">Cotizar un grupo por WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="botones fondo-degradado">
+      <p class="tipo__etiqueta">Sobre degradado</p>
+      <div class="botones__fila">
+        <a class="btn btn--claro" href="#t-botones">Consultar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Logos ===================== -->
+  <section class="contenedor estilos__bloque" aria-labelledby="t-logos">
+    <h2 id="t-logos">Logos</h2>
+    <p class="lectura">Cada versión sobre el fondo que le corresponde, con su área de protección. Nunca deformar, recolorear ni poner texto encima.</p>
+
+    <ul class="logos">
+      {logos.map((l) => (
+        <li class="logo">
+          <div class:list={['logo__fondo', `logo__fondo--${l.fondo}`]}>
+            <img
+              src={`/logos/${l.archivo}`}
+              alt={`Logo AQURA, versión ${l.archivo.replace('.png', '').replace('aqura-', '').replaceAll('-', ' ')}`}
+              width={l.ancho}
+              height={l.alto}
+              class:list={['logo__img', { 'logo__img--horizontal': l.horizontal }]}
+              loading="lazy"
+            />
+          </div>
+          <p class="color__nombre"><code>{l.archivo}</code></p>
+          <p class="color__rol">{l.uso}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .estilos__intro { padding-bottom: var(--espacio-7); }
+
+  .estilos__bloque {
+    padding-block: var(--espacio-8);
+    border-top: 1px solid var(--color-borde);
+  }
+  .estilos__sub {
+    margin-top: var(--espacio-7);
+    font-size: var(--titulo-4);
+    font-weight: 500;
+    color: var(--color-azul-oscuro);
+  }
+
+  code {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    font-size: 0.85em;
+  }
+
+  /* ---------- Colores ---------- */
+  .paleta {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--espacio-6);
+    grid-template-columns: 1fr;
+  }
+  .paleta li + li { margin-top: 0; }
+  .paleta--pequena { grid-template-columns: repeat(2, 1fr); gap: var(--espacio-5); }
+
+  .color__muestra {
+    height: 5rem;
+    margin-bottom: var(--espacio-3);
+    border-radius: var(--radio-md);
+    box-shadow: inset 0 0 0 1px rgb(1 65 84 / 0.08);
+  }
+  .color__muestra--grande { height: 8rem; }
+  .color__nombre {
+    margin: 0;
+    font-family: var(--font-titulos);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+  }
+  .color__dato, .color__rol { margin: 0; font-size: var(--texto-sm); }
+  .color__rol { color: var(--color-azul-oscuro); }
+
+  .color--texto {
+    padding: var(--espacio-5);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-md);
+  }
+  .color__ejemplo {
+    margin-bottom: var(--espacio-3);
+    font-family: var(--font-titulos);
+    font-size: var(--titulo-2);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-texto);
+  }
+
+  .degradado {
+    display: flex;
+    align-items: flex-end;
+    min-height: 8rem;
+    padding: var(--espacio-4);
+    border-radius: var(--radio-md);
+  }
+
+  /* ---------- Tipografía ---------- */
+  .tipo {
+    margin-top: var(--espacio-7);
+    padding-top: var(--espacio-5);
+    border-top: 1px dashed var(--color-borde);
+  }
+  .tipo__etiqueta {
+    margin-bottom: var(--espacio-4);
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-azul-oscuro);
+  }
+  .fondo-azul .tipo__etiqueta,
+  .fondo-degradado .tipo__etiqueta { color: var(--color-blanco); }
+  .fondo-turquesa .tipo__etiqueta { color: var(--color-texto); }
+  .tipo__nota { font-size: var(--texto-sm); color: var(--color-azul-oscuro); }
+
+  .h1-muestra, .h2-muestra, .h3-muestra, .h4-muestra {
+    margin-bottom: var(--espacio-3);
+    font-family: var(--font-titulos);
+    line-height: var(--interlineado-titulos);
+  }
+  .h1-muestra { font-size: var(--titulo-1); font-weight: 600; letter-spacing: -0.01em; }
+  .h2-muestra { font-size: var(--titulo-2); font-weight: 600; }
+  .h3-muestra { font-size: var(--titulo-3); font-weight: 500; }
+  .h4-muestra { font-size: var(--titulo-4); font-weight: 600; }
+  .h2-muestra .acento { font-size: 1.15em; color: var(--color-azul-oscuro); }
+
+  .pesos { display: grid; gap: var(--espacio-3); margin: var(--espacio-5) 0 0; }
+  .pesos div { display: grid; gap: 0; }
+  .pesos dt {
+    font-family: var(--font-titulos);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    color: var(--color-azul-oscuro);
+  }
+  .pesos dd { margin: 0; font-size: var(--texto-lg); }
+
+  /* ---------- Botones ---------- */
+  .botones {
+    margin-top: var(--espacio-5);
+    padding: var(--espacio-5);
+    border-radius: var(--radio-md);
+  }
+  .botones:not([class*='fondo-']) { padding-inline: 0; }
+  .botones__fila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espacio-4);
+  }
+  .botones__fila + .botones__fila { margin-top: var(--espacio-4); }
+
+  /* ---------- Logos ---------- */
+  .logos {
+    list-style: none;
+    margin: var(--espacio-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--espacio-6);
+  }
+  .logos li + li { margin-top: 0; }
+  .logo__fondo {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    /* área de protección amplia alrededor del logo */
+    padding: clamp(2rem, 8%, 3.5rem);
+    margin-bottom: var(--espacio-3);
+    border-radius: var(--radio-md);
+  }
+  .logo__fondo--claro { background: var(--color-blanco); box-shadow: inset 0 0 0 1px var(--color-borde); }
+  .logo__fondo--azul { background: var(--color-azul-oscuro); }
+  .logo__fondo--turquesa { background: var(--color-turquesa); }
+  .logo__fondo--aqua { background: var(--color-aqua); }
+  .logo__img { width: auto; height: 100%; max-height: 11rem; object-fit: contain; }
+  .logo__img--horizontal { width: 80%; height: auto; max-height: none; }
+
+  @media (min-width: 720px) {
+    .paleta { grid-template-columns: repeat(3, 1fr); }
+    .paleta--pequena { grid-template-columns: repeat(5, 1fr); }
+    .logos { grid-template-columns: repeat(2, 1fr); }
+    .pesos { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .logos { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
