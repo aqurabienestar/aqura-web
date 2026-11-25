@@ -102,7 +102,7 @@ Menú: `Apnea ▾ (Cursos AIDA · Sesiones) | Janzu | Travesías | Equipos | Ser
 - [x] Fotos: registro central en `src/contenido/fotos.ts` (32 fotos). `/fotos` (interna, noindex) las lista por página. `FotoPendiente` falla en el build si pide una foto que no está registrada.
 - [ ] Versión en inglés
 - [x] Publicación en Cloudflare Pages · 2026-11-23: `aqura-web.pages.dev`, se actualiza con cada push a `main` de `aqurabienestar/aqura-web` (repositorio público).
-  - `src/sitio.mjs`: `URL_SITIO` (cambiar al conectar el dominio) y `BORRADOR` (true = noindex en todo el sitio; false al lanzar).
+  - `src/sitio.mjs`: `URL_SITIO` y `BORRADOR` (true = noindex en todo el sitio; false al lanzar).
   - Qartella no trae tildes, ñ ni ¿: salen de `Qartella Acentos` (Montserrat ajustada) en `src/styles/fuentes.css`.
   - Páginas sin versión en inglés: el selector EN lleva a `/en/`. Lo inexistente muestra `src/pages/404.astro`.
-  - Pendiente: conectar `aqura.com.co`.
+  - Dominio conectado (2026-11-25): `aqura.com.co`; `www` redirige con 301 (regla en Cloudflare).
