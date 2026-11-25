@@ -54,7 +54,7 @@ Respetar el área de protección del manual. Nunca deformar, recolorear ni poner
 ## Estructura
 Menú: `Apnea ▾ (Cursos AIDA · Sesiones) | Janzu | Travesías | Equipos | Sergio` + botón WhatsApp.
 - `/` Home · `/apnea/cursos-aida` · `/apnea/sesiones` · `/janzu` · `/travesias` y `/travesias/<slug>` · `/equipos` · `/bitacora` y `/bitacora/<slug>` · `/contacto`
-- "Sergio" enlaza a `https://sergiomejiamartinez.pages.dev` en pestaña nueva.
+- "Sergio" enlaza a `https://sergiomejiamartinez.com` en pestaña nueva.
 - Bitácora fuera del menú: accesible desde home y footer.
 
 ## Bilingüe

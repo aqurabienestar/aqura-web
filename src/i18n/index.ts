@@ -40,7 +40,7 @@ export interface ItemNav {
   hijos?: ItemNav[];
 }
 
-export const URL_SERGIO = 'https://sergiomejiamartinez.pages.dev';
+export const URL_SERGIO = 'https://sergiomejiamartinez.com';
 export const URL_INSTAGRAM = 'https://www.instagram.com/sergio.mejia.m/';
 export const USUARIO_INSTAGRAM = '@sergio.mejia.m';
 
